@@ -9,6 +9,6 @@ export function encodeBaseX(str) {
 }
 
 export function decodeBaseX(enc) {
-  const bytes = customBase.decode(enc);
+  const bytes = customBase.decode(enc);n
   return new TextDecoder().decode(bytes);
 }
