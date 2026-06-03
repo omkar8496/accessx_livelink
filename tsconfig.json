@@ -19,7 +19,11 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "app/*": ["./app/*"],
+      "@livelink/api/*": ["./app/api/*"],
+      "@livelink/components/*": ["./app/accessx/components/*"],
+      "@livelink/lib/*": ["./app/lib/*"]
     }
   },
   "include": [

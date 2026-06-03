@@ -17,8 +17,10 @@ export function AccessDataProvider({ children }) {
     const session = getAuthSession();
     const token = session?.token;
     if (!token) {
-      setError("Missing token. Please log in again.");
-      setLoading(false);
+      queueMicrotask(() => {
+        setError("Missing token. Please log in again.");
+        setLoading(false);
+      });
       return;
     }
 

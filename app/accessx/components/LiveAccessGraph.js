@@ -4,13 +4,6 @@ import { useEffect, useMemo, useState } from "react";
 import { fetchAccessHourwise } from "./api";
 import { getAuthSession } from "@livelink/lib/authStorage";
 
-function formatHourLabel(hourStart) {
-  if (!hourStart) return "—";
-  const date = new Date(hourStart.replace(" ", "T"));
-  const hh = String(date.getHours()).padStart(2, "0");
-  return `${hh}:00`;
-}
-
 function formatHourOnly(hourStart) {
   if (!hourStart) return "-";
   const date = new Date(hourStart.replace(" ", "T"));
@@ -55,7 +48,7 @@ export function LiveAccessGraph() {
     const session = getAuthSession();
     const token = session?.token;
     if (!token) {
-      setError("Missing token. Please log in again.");
+      queueMicrotask(() => setError("Missing token. Please log in again."));
       return;
     }
 
@@ -109,7 +102,6 @@ export function LiveAccessGraph() {
   const yLabels = yTicks;
   const topValue = yTicks[0] || 100;
   const barAreaHeight = 260;
-  const barWidth = 22;
 
   return (
     <div className="rounded-[24px] bg-[#2f9aa8] p-5 text-white shadow-[0_18px_40px_rgba(0,0,0,0.12)] md:p-6">

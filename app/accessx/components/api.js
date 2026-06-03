@@ -21,7 +21,7 @@ export async function fetchEventDetails({ eventId }) {
   let body = null;
   try {
     body = await response.json();
-  } catch (error) {
+  } catch {
     // ignore parse errors
   }
 
@@ -53,7 +53,7 @@ export async function fetchAccessLast20({ token }) {
   let body = null;
   try {
     body = await response.json();
-  } catch (error) {
+  } catch {
     // ignore parse errors
   }
 
@@ -83,7 +83,7 @@ export async function fetchAccessHourwise({ token }) {
   let body = null;
   try {
     body = await response.json();
-  } catch (error) {
+  } catch {
     // ignore parse errors
   }
 
@@ -113,7 +113,7 @@ export async function fetchAccessDevice({ token }) {
   let body = null;
   try {
     body = await response.json();
-  } catch (error) {
+  } catch {
     // ignore parse errors
   }
 
@@ -143,7 +143,7 @@ export async function fetchAccessCategory({ token }) {
   let body = null;
   try {
     body = await response.json();
-  } catch (error) {
+  } catch {
     // ignore parse errors
   }
 
@@ -173,7 +173,7 @@ export async function fetchAccessGate({ token }) {
   let body = null;
   try {
     body = await response.json();
-  } catch (error) {
+  } catch {
     // ignore parse errors
   }
 
@@ -203,7 +203,7 @@ export async function fetchAccessGateCatg({ token }) {
   let body = null;
   try {
     body = await response.json();
-  } catch (error) {
+  } catch {
     // ignore parse errors
   }
 

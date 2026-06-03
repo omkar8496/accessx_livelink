@@ -28,7 +28,7 @@ export function HorizontalGraph() {
     const session = getAuthSession();
     const token = session?.token;
     if (!token) {
-      setError("Missing token. Please log in again.");
+      queueMicrotask(() => setError("Missing token. Please log in again."));
       return;
     }
     if (fetchedRef.current) return;
@@ -116,15 +116,23 @@ export function HorizontalGraph() {
   const radius = 60;
   const circumference = 2 * Math.PI * radius;
 
-  let cumulative = 0;
-  const arcs = segments.map((seg) => {
-    const fraction = totalUnique > 0 ? seg.unique / totalUnique : 0;
-    const arcLength = fraction * circumference;
-    const dashArray = `${arcLength} ${circumference - arcLength}`;
-    const offset = -cumulative * circumference;
-    cumulative += fraction;
-    return { ...seg, dashArray, offset };
-  });
+  const arcs = useMemo(
+    () =>
+      segments.reduce(
+        (acc, seg) => {
+          const fraction = totalUnique > 0 ? seg.unique / totalUnique : 0;
+          const arcLength = fraction * circumference;
+          const dashArray = `${arcLength} ${circumference - arcLength}`;
+          const offset = -acc.cumulative * circumference;
+          return {
+            cumulative: acc.cumulative + fraction,
+            items: [...acc.items, { ...seg, dashArray, offset }]
+          };
+        },
+        { cumulative: 0, items: [] }
+      ).items,
+    [circumference, segments, totalUnique]
+  );
 
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">

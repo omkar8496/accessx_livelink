@@ -51,7 +51,7 @@ export function LastTwentyRecords() {
     const session = getAuthSession();
     const token = session?.token;
     if (!token) {
-      setError("Missing token. Please log in again.");
+      queueMicrotask(() => setError("Missing token. Please log in again."));
       return;
     }
 
