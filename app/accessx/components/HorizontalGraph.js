@@ -135,13 +135,13 @@ export function HorizontalGraph() {
   );
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-2">
+    <div className="rounded-3xl bg-white p-6 shadow-lg border border-white/40 backdrop-blur-sm transition-all hover:shadow-xl">
+     <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="flex flex-wrap items-center gap-2">
           <select
             value={selectedGate}
             onChange={(e) => setSelectedGate(e.target.value)}
-            className="min-w-[110px] rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm"
+            className="min-w-[120px] rounded-xl border border- [#EBEBEB] bg-white px-4 py-2 text-sm font-medium shadow-sm focus:outline-none"
           >
             {gateOptions.map((gate) => (
               <option key={gate} value={gate}>
@@ -158,7 +158,7 @@ export function HorizontalGraph() {
                 onClick={() => setDirection(dir)}
                 className={`min-w-[48px] px-3 py-1 text-xs font-semibold rounded-full transition ${
                   direction === dir
-                    ? "bg-[#2f9aa8] text-white"
+                    ? "bg-[var(--light-blue)] text-white shadow"
                     : "text-slate-700"
                 }`}
               >
@@ -191,15 +191,15 @@ export function HorizontalGraph() {
       )}
 
       {!loading && !error && segments.length === 0 && (
-        <p className="mt-3 text-sm text-slate-600">No category data.</p>
+        <p className="mt-5 text-sm text-slate-600">No category data.</p>
       )}
 
       {!loading && !error && segments.length > 0 && (
         <div className="mt-3">
-          <div className="relative flex flex-col items-center gap-3 rounded-2xl bg-slate-50 px-3 py-3">
+          <div className="relative flex flex-col items-center gap-3 rounded-2xl bg-gradient-to-br from-white to-[#f8f8f8] shadow-inner px-3 py-3">
             <div className="flex w-full items-center justify-between px-3">
               <div className="text-center">
-                <p className="text-base font-bold text-[#2f9aa8]">Unique</p>
+                <p className="text-base font-bold text-[var(--light-blue)]">Unique</p>
                 <p className="text-xl font-bold text-slate-900">{totalUnique}</p>
               </div>
               <svg
@@ -233,7 +233,7 @@ export function HorizontalGraph() {
                 ))}
               </svg>
               <div className="text-center">
-                <p className="text-base font-bold text-[#ef4444]">Total</p>
+                <p className="text-base font-bold text-[var(--primary-orange)]">Total</p>
                 <p className="text-xl font-bold text-slate-900">{totalCount}</p>
               </div>
             </div>
@@ -243,7 +243,7 @@ export function HorizontalGraph() {
             {arcs.map((arc, idx) => (
               <div
                 key={arc.label + idx}
-                className="flex items-center justify-between rounded-lg border border-slate-100 px-3 py-1.5 text-xs"
+                className="flex items-center justify-between rounded-x1 bg-[#fafafa] border border-[#f0f0f0] hover:shadow-sm px-4 py-2 transition"
               >
                 <div className="flex items-center gap-2">
                   <span

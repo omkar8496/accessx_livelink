@@ -62,7 +62,7 @@ export function GateUniqueCount() {
     return (
       <div key={key} className="space-y-1">
         <div className="grid grid-cols-[1fr_auto] items-center gap-3 text-[11px] font-semibold">
-          <div className="relative h-3 w-full overflow-hidden rounded-full bg-slate-100">
+          <div className="relative h-3 w-full overflow-hidden rounded-full bg-[#f3f4f6]">
             <div
               className="absolute left-0 top-0 h-full rounded-full"
               style={{ width: `${widthCount}%`, backgroundColor: colors.total }}
@@ -88,12 +88,12 @@ export function GateUniqueCount() {
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+    <div className="rounded-3xl border border-[#F2F2F2] bg-white p-6 shadow-lg transition-all hover:shadow-xl">
       <div className="mb-3 flex items-center justify-between">
-        <h3 className="text-base font-semibold text-slate-900">Gate Count</h3>
+        <h3 className="text-lg font-[family-name:var(--font-chillax)] font-semibold text-slate-900">Gate Count</h3>
         <div className="grid grid-cols-2  text-xs font-bold uppercase tracking-[0.16em] text-slate-600 min-w-[140px] text-right">
-          <span className="text-[#2f9aa8] -mr-2">Unique</span>
-          <span className="text-[#ef4444]">Total</span>
+          <span className="text-[var(--light-blue)] -mr-2">Unique</span>
+          <span className="text-[var(--primary-orange)]">Total</span>
         </div>
       </div>
 
@@ -103,14 +103,14 @@ export function GateUniqueCount() {
         </div>
       )}
 
-      {loading && <p className="text-sm text-slate-600">Loading…</p>}
+      {loading && <p className="text-sm text-slate-600">Loading gates…</p>}
 
       {!loading && rows.length === 0 && !error && (
         <p className="text-sm text-slate-600">No gate data.</p>
       )}
 
       <div
-        className={`space-y-4 ${scrollable ? "max-h-64 overflow-y-scroll pr-1" : ""}`}
+        className={`space-y-4 ${scrollable ? "max-h-72 overflow-y-scroll pr-1" : ""}`}
         style={
           scrollable
             ? {
@@ -122,8 +122,8 @@ export function GateUniqueCount() {
         }
       >
         {rows.map((row) => (
-          <div key={row.label} className="space-y-2">
-            <div className="text-sm font-semibold text-slate-800 truncate pr-2">{row.label}</div>
+          <div key={row.label} className="space-y-2 rounded-2xl p-3 border border-[#f1f1f1] bg-[#fafafa]">
+            <div className="text-sm font-semibold text-slate-800 tracking-wide truncate pr-2">{row.label}</div>
             {renderBar("IN", row.in, { total: "#d7eff3", unique: "#2f9aa8" }, `${row.label}-in`)}
             {renderBar("OUT", row.out, { total: "#fde7d2", unique: "#f58633" }, `${row.label}-out`)}
           </div>

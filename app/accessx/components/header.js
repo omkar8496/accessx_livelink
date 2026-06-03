@@ -50,15 +50,15 @@ export default function EventHeader({ event }) {
             width={144}
             height={64}
             priority
-            className="h-14 w-32 object-contain md:h-16 md:w-36"
+            className="h-16 w-36 object-contain md:h-20 md:w-44"
           />
         </div>
 
         <div className="min-w-0">
-          <h1 className="truncate text-2xl font-black leading-tight tracking-normal text-[#111111] md:text-[32px]">
+          <h1 className="truncate text-2xl font-[family-name:var(--font-chillax)] font-semibold md:text-[28px]">
             {title}
           </h1>
-          <div className="mt-1.5 flex min-w-0 items-center gap-2 text-base font-medium text-[#686868] md:text-lg">
+          <div className="mt-1.5 flex min-w-0 items-center gap-2 text-sm font-medium text-[#686868] md:text-base">
             <span className="relative h-3.5 w-3.5 shrink-0 rounded-full bg-[#e94120] shadow-[0_0_0_2px_rgba(233,65,32,0.14)]">
               <span className="absolute left-1/2 top-full h-2 w-0.5 -translate-x-1/2 rounded-full bg-[#b62918]" />
             </span>
@@ -66,7 +66,7 @@ export default function EventHeader({ event }) {
           </div>
         </div>
 
-        <time className="self-start text-right text-base font-extrabold leading-none text-[#444444] md:text-lg">
+        <time className="self-start text-right text-sm font-bold leading-none text-[#444444] md:text-base">
           {formatHeaderTime(now)}
         </time>
       </div>
