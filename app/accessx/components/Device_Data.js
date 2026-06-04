@@ -54,34 +54,34 @@ export function Device_Data() {
   }, []);
 
   return (
-    <div className="rounded-3xl border border-[#F2F2F2] bg-white p-6 shadow-lg transition-all hover:shadow-xl">
+    <div className="rounded-3xl border border-[color:var(--border-light)] bg-[color:var(--bg-secondary)] p-6 shadow-[var(--shadow-lg)] transition-all hover:shadow-[var(--shadow-xl)]">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3 flex-wrap">
-          <h3 className="text-lg font-[family-name:var(--font-chillax)] font-semibold text-slate-900">Devices</h3>
-          <div className="flex items-center gap-2 text-xs font-semibold text-slate-600">
-            <span className="text-[11px] uppercase tracking-[0.18em] font-semibold text-slate-700 pt-1">- View- </span>
-            <div className="flex items-center gap-[4px] rounded-full bg-slate-100 px-1 ">
+          <h3 className="text-lg font-[family-name:var(--font-chillax)] font-[var(--fw-semibold)] text-[color:var(--text-primary)]">Devices</h3>
+          <div className="flex items-center gap-2 text-xs font-[var(--fw-semibold)] text-[color:var(--text-secondary)]">
+            <span className="text-[11px] uppercase tracking-[0.18em] font-[var(--fw-semibold)] text-[color:var(--text-secondary)] pt-1">- View- </span>
+            <div className="flex items-center gap-[4px] rounded-full bg-[rgba(0,169,242,0.08)] px-1 ">
               <button
                 type="button"
                 onClick={() => setView("grid")}
-                className={`rounded-full px-3 text-sm font-semibold transition ${view === "grid" ? "bg-[var(--light-blue)] text-white shadow" : "text-slate-600"}`}
+                className={`rounded-full px-3 text-sm font-[var(--fw-semibold)] transition ${view === "grid" ? "bg-[var(--light-blue)] text-white shadow" : "text-[color:var(--text-secondary)]"}`}
               >
                 Cards
               </button>
               <button
                 type="button"
                 onClick={() => setView("table")}
-                className={`rounded-full px-3 text-sm font-semibold transition ${view === "table" ? "bg-[var(--light-blue)] text-white shadow" : "text-slate-600"}`}
+                className={`rounded-full px-3 text-sm font-[var(--fw-semibold)] transition ${view === "table" ? "bg-[var(--light-blue)] text-white shadow" : "text-[color:var(--text-secondary)]"}`}
               >
                 Table
               </button>
             </div>
           </div>
         </div>
-        {loading && <span className="text-xs text-slate-500">Loading…</span>}
+        {loading && <span className="text-xs text-[color:var(--text-secondary)]">Loading…</span>}
       </div>
       {error && (
-        <div className="mt-3 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+        <div className="mt-3 rounded-[color:var(--radius-lg)] border border-[color:var(--accent-red)] bg-[rgba(233,65,32,0.08)] px-3 py-2 text-sm text-[color:var(--accent-red)]">
           {error}
         </div>
       )}
@@ -99,45 +99,45 @@ export function Device_Data() {
             return (
               <div
                 key={key}
-                className="relative overflow-hidden rounded-2xl border border-[#F2F2F2] bg-white p-4 shadow-md transition-all hover:shadow-lg"
+                className="relative overflow-hidden rounded-2xl border border-[color:var(--border-light)] bg-[color:var(--bg-secondary)] p-4 shadow-[var(--shadow-md)] transition-all hover:shadow-[var(--shadow-lg)]"
               >
-                <div className="absolute right-3 top-3 h-7 w-7 rounded-full border border-[var(--light-blue)]/40 bg-white text-center text-sm font-semibold text-[var(--light-blue)] flex items-center justify-center">
+                <div className="absolute right-3 top-3 h-7 w-7 rounded-full border border-[var(--light-blue)]/40 bg-[color:var(--bg-secondary)] text-center text-sm font-[var(--fw-semibold)] text-[color:var(--light-blue)] flex items-center justify-center">
                   –
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="flex-1 space-y-1">
-                    <p className="text-sm font-semibold text-slate-900">
+                    <p className="text-sm font-[var(--fw-semibold)] text-[color:var(--text-primary)]">
                       {device.gate_name ? `Gate ${device.gate_name}` : "Gate"}{" "}
-                      <span className="font-bold">- {device.device_print_id || "—"}</span>
+                      <span className="font-[var(--fw-bold)]">- {device.device_print_id || "—"}</span>
                     </p>
-                    <p className="text-[12px] text-slate-800">
+                    <p className="text-[12px] text-[color:var(--text-secondary)]">
                       {device.category_name || "—"}
                     </p>
-                    <p className="text-[12px] font-semibold text-slate-800">
-                      type : <span className="font-semibold uppercase">{device.type || device.direction || "—"}</span>
+                    <p className="text-[12px] font-[var(--fw-semibold)] text-[color:var(--text-secondary)]">
+                      type : <span className="font-[var(--fw-semibold)] uppercase">{device.type || device.direction || "—"}</span>
                     </p>
-                    <p className="text-[11px] text-slate-500">{formatTime(device.latesttime)}</p>
+                    <p className="text-[11px] text-[color:var(--text-tertiary)]">{formatTime(device.latesttime)}</p>
                   </div>
-                  <div className="mx-2 h-14 w-px bg-slate-200" />
+                  <div className="mx-2 h-14 w-px bg-[color:var(--border-light)]" />
                   <div className="flex flex-col items-center justify-center min-w-[70px] pr-8">
-                    <span className="text-2xl font-bold text-[var(--light-blue)]">
+                    <span className="text-2xl font-[var(--fw-bold)] text-[color:var(--light-blue)]">
                       {device.unique_count ?? "—"}
                     </span>
-                    <span className="text-xs uppercase tracking-wider text-slate-500">Count</span>
+                    <span className="text-xs uppercase tracking-wider text-[color:var(--text-tertiary)]">Count</span>
                   </div>
                 </div>
               </div>
             );
           })}
           {!loading && !devices.length && !error && (
-            <p className="text-sm text-slate-600">No devices found.</p>
+            <p className="text-sm text-[color:var(--text-secondary)]">No devices found.</p>
           )}
           {devices.length > 12 && (
             <div className="sm:col-span-2 md:col-span-3 lg:col-span-4">
               <button
                 type="button"
                 onClick={() => setExpanded((prev) => !prev)}
-                className="mt-2 w-full rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
+                className="mt-2 w-full rounded-full border border-[color:var(--border-light)] bg-[color:var(--bg-secondary)] px-3 py-2 text-sm font-[var(--fw-semibold)] text-[color:var(--text-secondary)] shadow-[var(--shadow-sm)] transition hover:bg-[rgba(0,0,0,0.02)]"
               >
                 {expanded ? "Show less" : "Show all"}
               </button>
@@ -148,8 +148,8 @@ export function Device_Data() {
 
       {view === "table" && (
         <div className="mt-4 overflow-x-auto">
-          <table className="min-w-full text-left text-sm text-slate-700">
-            <thead className="bg-[#fafafa] text-xs font-semibold uppercase tracking-[0.08em] text-slate-500">
+          <table className="min-w-full text-left text-sm text-[color:var(--text-secondary)]">
+            <thead className="bg-[rgba(0,0,0,0.02)] text-xs font-[var(--fw-semibold)] uppercase tracking-[0.08em] text-[color:var(--text-tertiary)]">
               <tr>
                 <th className="px-3 py-2">Device</th>
                 <th className="px-3 py-2">Gate</th>
@@ -162,14 +162,14 @@ export function Device_Data() {
             <tbody>
               {loading && (
                 <tr>
-                  <td colSpan={6} className="px-3 py-3 text-center text-slate-600">
+                  <td colSpan={6} className="px-3 py-3 text-center text-[color:var(--text-secondary)]">
                     Loading…
                   </td>
                 </tr>
               )}
               {!loading && devices.length === 0 && !error && (
                 <tr>
-                  <td colSpan={6} className="px-3 py-3 text-center text-slate-600">
+                  <td colSpan={6} className="px-3 py-3 text-center text-[color:var(--text-secondary)]">
                     No devices found.
                   </td>
                 </tr>
@@ -184,19 +184,19 @@ export function Device_Data() {
                   ].filter(Boolean);
                   const key = keyParts.join("-");
                   return (
-                    <tr key={key} className="border-b border-slate-100 hover:bg-[#fafafa] transition-colors">
-                      <td className="px-3 py-2 font-semibold text-slate-900">
+                    <tr key={key} className="border-b border-[color:var(--border-light)] hover:bg-[rgba(0,0,0,0.02)] transition-colors">
+                      <td className="px-3 py-2 font-[var(--fw-semibold)] text-[color:var(--text-primary)]">
                         {device.device_print_id || "—"}
                       </td>
                       <td className="px-3 py-2">{device.gate_name || "—"}</td>
                       <td className="px-3 py-2">{device.category_name || "—"}</td>
-                      <td className="px-3 py-2 text-[var(--light-blue)] font-semibold">
+                      <td className="px-3 py-2 text-[color:var(--light-blue)] font-[var(--fw-semibold)]">
                         {device.unique_count ?? "—"}
                       </td>
-                      <td className="px-3 py-2 text-xs uppercase tracking-[0.16em] text-slate-600">
+                      <td className="px-3 py-2 text-xs uppercase tracking-[0.16em] text-[color:var(--text-secondary)]">
                         {device.direction || "—"}
                       </td>
-                      <td className="px-3 py-2 text-xs text-slate-600">
+                      <td className="px-3 py-2 text-xs text-[color:var(--text-secondary)]">
                         {formatTime(device.latesttime)}
                       </td>
                     </tr>
@@ -208,7 +208,7 @@ export function Device_Data() {
             <button
               type="button"
               onClick={() => setExpanded((prev) => !prev)}
-              className="mt-3 w-full rounded-xl border border-[#ECECEC] bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
+              className="mt-3 w-full rounded-[color:var(--radius-lg)] border border-[color:var(--border-light)] bg-[color:var(--bg-secondary)] px-3 py-2 text-sm font-[var(--fw-semibold)] text-[color:var(--text-secondary)] shadow-[var(--shadow-sm)] transition hover:bg-[rgba(0,0,0,0.02)]"
             >
               {expanded ? "Show less" : "Show more"}
             </button>

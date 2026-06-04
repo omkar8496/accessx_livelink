@@ -5,7 +5,7 @@ export default function AccessxLayout({ children }) {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-[100dvh] items-center justify-center bg-[#f2f2f2] px-4 text-sm text-slate-600">
+        <div className="flex items-center justify-center min-h-[100dvh] px-4 text-sm bg-[color:var(--bg-primary)] text-[color:var(--text-secondary)]">
           Loading...
         </div>
       }

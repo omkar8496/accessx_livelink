@@ -35,10 +35,15 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details. -->
 
-
 # AccessX Live Dashboard
 
-AccessX is a Next.js based live access control dashboard used for monitoring event access data, gate activity, category counts, device information, and recent access records.
+## Overview
+
+AccessX is a Next.js-based live access control dashboard used for monitoring event access data, gate activity, category-wise statistics, device information, and recent access records.
+
+The dashboard receives live event data and displays it through various visual components such as graphs, category counts, gate counts, device data tables, and access logs.
+
+---
 
 ## Tech Stack
 
@@ -46,14 +51,23 @@ AccessX is a Next.js based live access control dashboard used for monitoring eve
 * React
 * Tailwind CSS
 * JavaScript
+* Context API
 * Local Fonts (Chillax, Poppins, VCR)
 
-## Project Setup
+---
 
-Clone repository:
+## Installation
+
+Clone the repository:
 
 ```bash
-git clone <repo-url>
+git clone <repository-url>
+```
+
+Navigate to the project:
+
+```bash
+cd accessx_livelink
 ```
 
 Install dependencies:
@@ -62,76 +76,231 @@ Install dependencies:
 npm install
 ```
 
-Run development server:
+Run the development server:
 
 ```bash
 npm run dev
 ```
 
-Open dashboard:
+Open:
 
-```text
+```bash
 http://localhost:3000/accessx/?e=MTcwNg==
 ```
+
+---
 
 ## Project Structure
 
 ```text
 app/
- ├ accessx/
- │ ├ components/
- │ ├ page.js
- │ └ layout.js
+│
+├── accessx/
+│   ├── components/
+│   │   ├── Header.js
+│   │   ├── HorizontalGraph.js
+│   │   ├── LiveAccessGraph.js
+│   │   ├── CateUniqueCount.js
+│   │   ├── GateUniqueCount.js
+│   │   ├── Device_Data.js
+│   │   ├── LastTwentyRecords.js
+│   │   └── AccessDataContext.js
+│   │
+│   ├── page.js
+│   └── layout.js
+│
+├── globals.css
+└── layout.tsx
 
 public/
- └ fonts/
-    ├ chillax/
-    ├ poppins/
-    └ vcr/
+└── fonts/
+    ├── chillax/
+    ├── poppins/
+    └── vcr/
 ```
 
-## Fonts Setup
+---
 
-* Added Chillax font
-* Added Poppins font
-* Added VCR font
-* Configured fonts using Next.js localFont
+## Fonts Configuration
+
+The project uses local fonts loaded through Next.js localFont:
+
+### Chillax
+
+Used primarily for headings and branding.
+
+### Poppins
+
+Used as the primary dashboard font.
+
+### VCR
+
+Available for specific dashboard elements where required.
+
+Fonts are stored under:
+
+```text
+public/fonts/
+```
+
+---
 
 ## Global Styling
 
-* Added global color variables
-* Configured global typography
-* Added default Poppins font
-* Added reusable brand colors
+Implemented global styling using:
 
-## UI Improvements
+* Brand color variables
+* Global typography setup
+* Dashboard background styling
+* Font configuration
+* Reusable design tokens
 
-* Updated Header UI
-* Updated Category Count UI
-* Updated Gate Count UI
-* Updated Device Data UI
-* Updated Last Twenty Records UI
-* Updated dashboard card styling
-* Improved component spacing and typography
+Brand Colors:
 
-## Important Notes
+```css
+--primary-orange: #E04420;
+--black: #1C1C1C;
+--electric-blue: #341CD6;
+--light-blue: #00A9F2;
+--purple: #D5B7FF;
+--egg-white: #EBEBEB;
+```
 
-* Live graph logic should not be modified
-* Dashboard uses encoded query parameters
-* Uses AccessData context for shared state
-* Project uses trailingSlash configuration for deployment
-* Most UI changes should be done using Tailwind CSS inside components
+---
 
-## Build Commands
+## UI Improvements Completed
 
-Build project:
+### Header Component
+
+* Added AtomX-inspired gradient styling
+* Improved typography hierarchy
+* Improved event title visibility
+* Styled venue information
+* Improved timestamp visibility
+* Added modern card appearance
+
+### Category Count Component
+
+* Improved card layout
+* Added visual hierarchy
+* Improved count presentation
+* Added styled progress indicators
+* Improved spacing and readability
+
+### Gate Count Component
+
+* Improved visual layout
+* Enhanced progress indicators
+* Better typography and spacing
+* Improved count visualization
+
+### Dashboard Styling
+
+* Improved card appearance
+* Improved spacing and alignment
+* Better visual grouping of sections
+* Applied consistent design language across components
+
+---
+
+## Important Development Notes
+
+### Live Graph
+
+Do not modify:
+
+* Live graph logic
+* Data refresh mechanism
+* Graph data calculations
+
+Only UI styling around the graph should be modified when required.
+
+### Query Parameters
+
+Dashboard uses encoded query parameters:
+
+```text
+/accessx/?e=<encoded-value>
+```
+
+### Shared State
+
+Dashboard data is managed using:
+
+```text
+AccessDataContext
+```
+
+which provides:
+
+* Category data
+* Gate data
+* Device data
+* Access records
+* Graph data
+
+---
+
+## Deployment Notes
+
+Ensure:
+
+```js
+trailingSlash: true
+```
+
+is configured inside:
+
+```text
+next.config.mjs
+```
+
+to support deployment routing requirements.
+
+---
+
+## Future UI Improvements
+
+Planned enhancements:
+
+* Additional dashboard UI refinements
+* Improved table styling
+* Improved card system
+* Better responsive behavior
+* UI library evaluation and integration research
+* Chart and visualization design improvements while preserving existing data logic
+
+---
+
+## Available Scripts
+
+Start development server:
+
+```bash
+npm run dev
+```
+
+Build production version:
 
 ```bash
 npm run build
 ```
 
-Run production build:
+Start production server:
 
 ```bash
 npm start
 ```
+
+---
+
+## Author Notes
+
+Current development focuses on:
+
+* UI modernization
+* Tailwind CSS styling
+* Brand guideline implementation
+* Component-level UI improvements
+
+while preserving all existing dashboard functionality and business logic.

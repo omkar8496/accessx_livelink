@@ -38,17 +38,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-return (
-
+  return (
     <html
       lang="en"
       className={`${chillax.variable} ${poppins.variable} ${vcr.variable}`}
     >
-
-      <body className="min-h-full flex flex-col">
+      <body className="flex flex-col min-h-screen bg-[color:var(--bg-primary)] text-[color:var(--text-primary)]">
         {children}
       </body>
-
     </html>
   );
 }

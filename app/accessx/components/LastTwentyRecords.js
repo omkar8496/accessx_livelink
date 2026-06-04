@@ -7,23 +7,23 @@ import { getAuthSession } from "@livelink/lib/authStorage";
 const statusClass = (status) => {
   const normalized = status?.toLowerCase() ?? "";
   if (normalized === "allowed" || normalized === "allow") {
-    return "bg-[#d8f3dc] text-[#1b7f3b]";
+    return "bg-[rgba(0,169,242,0.1)] text-[var(--light-blue)]";
   }
   if (normalized === "not allow" || normalized === "denied") {
-    return "bg-[#fbcfd2] text-[#d83a3a]";
+    return "bg-[rgba(233,65,32,0.1)] text-[var(--accent-red)]";
   }
-  return "bg-slate-100 text-slate-700";
+  return "bg-[rgba(0,0,0,0.05)] text-[color:var(--text-secondary)]";
 };
 
 const statusBgMobile = (status) => {
   const normalized = status?.toLowerCase() ?? "";
   if (normalized === "allowed" || normalized === "allow") {
-    return "bg-[#eaf7ec]";
+    return "bg-[rgba(0,169,242,0.08)]";
   }
   if (normalized === "not allow" || normalized === "denied") {
-    return "bg-[#fce7ea]";
+    return "bg-[rgba(233,65,32,0.08)]";
   }
-  return "bg-slate-50";
+  return "bg-[color:var(--bg-primary)]";
 };
 
 const directionClass = (dir) =>
@@ -83,10 +83,10 @@ export function LastTwentyRecords() {
 
   const renderTable = (
     <div className="hidden md:block">
-      <div className="max-h-[420px] overflow-y-auto rounded-2xl border border-[#F4F4F4]">
-        <table className="min-w-full text-left text-sm text-slate-700">
-          <thead className="sticky top-0 bg-[#fafafa] backdrop-blur-sm">
-            <tr className="text-xs font-semibold uppercase tracking-[0.08em] text-slate-500">
+      <div className="max-h-[420px] overflow-y-auto rounded-2xl border border-[color:var(--border-light)]">
+        <table className="min-w-full text-left text-sm text-[color:var(--text-secondary)]">
+          <thead className="sticky top-0 bg-[rgba(0,0,0,0.02)] backdrop-blur-sm">
+            <tr className="text-xs font-[var(--fw-semibold)] uppercase tracking-[0.08em] text-[color:var(--text-tertiary)]">
               <th className="px-3 py-2">Card Id</th>
               <th className="px-3 py-2">Gate</th>
               <th className="px-3 py-2">Category</th>
@@ -99,37 +99,37 @@ export function LastTwentyRecords() {
           <tbody>
             {loading && (
               <tr>
-                <td colSpan={7} className="px-3 py-4 text-center text-slate-600">
+                <td colSpan={7} className="px-3 py-4 text-center text-[color:var(--text-secondary)]">
                   Loading records…
                 </td>
               </tr>
             )}
             {!loading && records.length === 0 && !error && (
               <tr>
-                <td colSpan={7} className="px-3 py-4 text-center text-slate-600">
+                <td colSpan={7} className="px-3 py-4 text-center text-[color:var(--text-secondary)]">
                   No records found.
                 </td>
               </tr>
             )}
             {!loading &&
               records.slice(0, 20).map((entry, idx) => (
-                <tr key={`${entry.card_id || "card"}-${idx}`} className={`transition hover:bg-[#fafafa] ${idx % 2 === 0 ? "bg-white" : "bg-[#fcfcfc]"}`}>
-                  <td className="px-3 py-3 font-semibold text-slate-900">{entry.card_id || "—"}</td>
+                <tr key={`${entry.card_id || "card"}-${idx}`} className={`transition hover:bg-[rgba(0,0,0,0.02)] ${idx % 2 === 0 ? "bg-[color:var(--bg-secondary)]" : "bg-[rgba(0,0,0,0.01)]"}`}>
+                  <td className="px-3 py-3 font-[var(--fw-semibold)] text-[color:var(--text-primary)]">{entry.card_id || "—"}</td>
                   <td className="px-3 py-3">{entry.gate_name || "—"}</td>
                   <td className="px-3 py-3">{entry.category_name || "—"}</td>
-                  <td className="px-3 py-3 text-slate-600">{formatTime(entry.tapped_at_unix)}</td>
+                  <td className="px-3 py-3 text-[color:var(--text-secondary)]">{formatTime(entry.tapped_at_unix)}</td>
                   <td className="px-3 py-3">
-                    <span className={`inline-flex min-w-[52px] items-center justify-center rounded-full px-3 py-1 text-xs font-semibold uppercase ${directionClass(entry.direction)}`}>
+                    <span className={`inline-flex min-w-[52px] items-center justify-center rounded-full px-3 py-1 text-xs font-[var(--fw-semibold)] uppercase ${directionClass(entry.direction)}`}>
                       {entry.direction || "—"}
                     </span>
                   </td>
                   <td className="px-3 py-3">
-                    <span className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-700 capitalize">
+                    <span className="inline-flex items-center justify-center rounded-full border border-[color:var(--border-light)] bg-[rgba(0,0,0,0.02)] px-3 py-1 text-xs font-[var(--fw-semibold)] text-[color:var(--text-secondary)] capitalize">
                       {entry.type || "—"}
                     </span>
                   </td>
                   <td className="px-3 py-3">
-                    <span className={`inline-flex min-w-[70px] items-center justify-center rounded-full px-3 py-1 text-xs font-semibold ${statusClass(entry.status)}`}>
+                    <span className={`inline-flex min-w-[70px] items-center justify-center rounded-full px-3 py-1 text-xs font-[var(--fw-semibold)] ${statusClass(entry.status)}`}>
                       {entry.status || "—"}
                     </span>
                   </td>
@@ -144,12 +144,12 @@ export function LastTwentyRecords() {
   const renderCards = (
     <div className="sticky top-2 space-y-2 overflow-y-auto md:hidden" style={{ maxHeight: "60vh" }}>
       {loading && (
-        <div className="rounded-2xl border border-[#F2F2F2] bg-[#fafafa] px-3 py-3 text-sm text-slate-600">
+        <div className="rounded-2xl border border-[color:var(--border-light)] bg-[color:var(--bg-primary)] px-3 py-3 text-sm text-[color:var(--text-secondary)]">
           Loading records…
         </div>
       )}
       {!loading && records.length === 0 && !error && (
-        <div className="rounded-2xl border border-[#F2F2F2] bg-[#fafafa] px-3 py-3 text-sm text-slate-600">
+        <div className="rounded-2xl border border-[color:var(--border-light)] bg-[color:var(--bg-primary)] px-3 py-3 text-sm text-[color:var(--text-secondary)]">
           No records found.
         </div>
       )}
@@ -157,22 +157,22 @@ export function LastTwentyRecords() {
         records.slice(0, 20).map((entry, idx) => (
           <div
             key={`${entry.card_id || "card"}-${idx}`}
-            className={`rounded-2xl border border-[#EFEFEF] px-4 py-3 shadow-sm hover:shadow-md transition ${statusBgMobile(entry.status)}`}
+            className={`rounded-2xl border border-[color:var(--border-light)] px-4 py-3 shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] transition ${statusBgMobile(entry.status)}`}
           >
             <div className="flex items-center justify-between gap-2">
-              <div className="text-sm font-semibold text-slate-900 leading-tight">
+              <div className="text-sm font-[var(--fw-semibold)] text-[color:var(--text-primary)] leading-tight">
                 <div>{entry.card_id || "—"}{entry.gate_name ? ` • ${entry.gate_name}` : ""}</div>
               </div>
-              <span className={`inline-flex items-center justify-center rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase ${directionClass(entry.direction)}`}>
+              <span className={`inline-flex items-center justify-center rounded-full px-2 py-0.5 text-[10px] font-[var(--fw-semibold)] uppercase ${directionClass(entry.direction)}`}>
                 {entry.direction || "—"}
               </span>
             </div>
-            <div className="mt-2 space-y-1 text-[11px] text-slate-700">
+            <div className="mt-2 space-y-1 text-[11px] text-[color:var(--text-secondary)]">
               <div className="flex items-center justify-between gap-3">
                 <span className="capitalize">{entry.type || "—"} {entry.category_name || ""}</span>
-                <span className="text-slate-600 whitespace-nowrap">{formatTime(entry.tapped_at_unix)}</span>
+                <span className="text-[color:var(--text-tertiary)] whitespace-nowrap">{formatTime(entry.tapped_at_unix)}</span>
               </div>
-              
+
             </div>
           </div>
         ))}
@@ -180,11 +180,11 @@ export function LastTwentyRecords() {
   );
 
   return (
-    <div className="rounded-3xl border border-[#F2F2F2] bg-white p-6 shadow-lg transition-all hover:shadow-xl">
-      <h3 className="text-lg font-[family-name:var(--font-chillax)] font-semibold text-slate-900">Last 20 Entries</h3>
+    <div className="rounded-3xl border border-[color:var(--border-light)] bg-[color:var(--bg-secondary)] p-6 shadow-[var(--shadow-lg)] transition-all hover:shadow-[var(--shadow-xl)]">
+      <h3 className="text-lg font-[family-name:var(--font-chillax)] font-[var(--fw-semibold)] text-[color:var(--text-primary)]">Last 20 Entries</h3>
 
       {error && (
-        <div className="mt-3 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+        <div className="mt-3 rounded-[color:var(--radius-lg)] border border-[color:var(--accent-red)] bg-[rgba(233,65,32,0.08)] px-3 py-2 text-sm text-[color:var(--accent-red)]">
           {error}
         </div>
       )}

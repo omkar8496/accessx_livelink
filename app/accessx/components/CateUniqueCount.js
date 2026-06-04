@@ -6,8 +6,7 @@ import { useAccessData } from "./AccessDataContext";
 function normalizeDirection(dir) {
   if (typeof dir !== "string") return "OUT";
   const upper = dir.toUpperCase();
-  if (upper === "IN") return "IN";
-  return "OUT";
+  return upper === "IN" ? "IN" : "OUT";
 }
 
 export function CateUniqueCount() {
@@ -39,15 +38,13 @@ export function CateUniqueCount() {
     }, new Map());
 
     return Array.from(aggregated.values()).sort(
-      (a, b) =>
-        b.in.count + b.out.count - (a.in.count + a.out.count)
+      (a, b) => b.in.count + b.out.count - (a.in.count + a.out.count)
     );
   }, [catData]);
 
   const maxValue = useMemo(() => {
     const allCounts = rows.flatMap((r) => [r.in.count, r.out.count]);
-    if (!allCounts.length) return 1;
-    return Math.max(...allCounts, 1);
+    return allCounts.length ? Math.max(...allCounts, 1) : 1;
   }, [rows]);
 
   const scrollable = rows.length > 5;
@@ -61,26 +58,23 @@ export function CateUniqueCount() {
     );
     return (
       <div key={key} className="space-y-1">
-        <div className="grid grid-cols-[1fr_auto] items-center gap-3 text-[11px] font-semibold">
-          <div className="relative h-3 w-full overflow-hidden rounded-full bg-[#f3f4f6]">
+        <div className="grid grid-cols-[1fr_auto] items-center gap-3 text-xs font-semibold">
+          <div className="relative h-3 w-full overflow-hidden rounded-full bg-[color:var(--egg-white)]">
             <div
-              className="absolute left-0 top-0 h-full rounded-full"
+              className="absolute left-0 top-0 h-full rounded-full transition-all"
               style={{ width: `${widthCount}%`, backgroundColor: colors.total }}
             />
             <div
-              className="absolute left-0 top-0 h-full rounded-full"
-              style={{
-                width: `${widthUnique}%`,
-                backgroundColor: colors.unique
-              }}
+              className="absolute left-0 top-0 h-full rounded-full transition-all"
+              style={{ width: `${widthUnique}%`, backgroundColor: colors.unique }}
             />
-            <div className="absolute inset-0 flex items-center pl-2 text-[11px] font-semibold text-slate-900">
+            <div className="absolute inset-0 flex items-center pl-2 text-[10px] font-bold text-[color:var(--text-primary)]">
               {dirLabel}
             </div>
           </div>
           <div className="grid grid-cols-2 min-w-[120px] text-right font-bold">
-            <span className="text-[#2f9aa8]">{data.unique}</span>
-            <span className="text-[#ef4444]">{data.count}</span>
+            <span className="text-[color:var(--electric-blue)]">{data.unique}</span>
+            <span className="text-[color:var(--primary-orange)]">{data.count}</span>
           </div>
         </div>
       </div>
@@ -88,44 +82,55 @@ export function CateUniqueCount() {
   };
 
   return (
-    <div className="rounded-3xl border border-[#F2F2F2] bg-white p-6 shadow-lg transition-all hover:shadow-xl">
-      <div className="mb-3 flex items-center justify-between">
-        <h3 className="text-lg font-[family-name:var(--font-chillax)] font-semibold text-slate-900">Catg Count</h3>
-        <div className="grid grid-cols-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-600 min-w-[140px] text-right">
-          <span className="text-[var(--light-blue)] -mr-2">Unique</span>
-          <span className="text-[var(--primary-orange)]">Total</span>
+    <div className="rounded-3xl border border-[color:var(--border-light)] bg-[color:var(--bg-secondary)] p-6 shadow-[var(--shadow-lg)] hover:shadow-[var(--shadow-xl)] transition-all">
+      <div className="mb-4 flex items-center justify-between">
+        <h3 className="text-lg font-[family-name:var(--font-chillax)] font-semibold 
+                       bg-gradient-to-r from-[color:var(--electric-blue)] to-[color:var(--primary-orange)] 
+                       bg-clip-text text-transparent">
+          Category Count
+        </h3>
+        <div className="grid grid-cols-2 text-xs font-bold uppercase tracking-wide min-w-[130px] text-right">
+          <span className="text-[color:var(--electric-blue)]">Unique</span>
+          <span className="text-[color:var(--primary-orange)]">Total</span>
         </div>
       </div>
 
       {error && (
-        <div className="mb-3 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+        <div className="mb-3 rounded-lg border border-[color:var(--accent-red)] bg-[rgba(233,65,32,0.08)] px-3 py-2 text-sm text-[color:var(--accent-red)]">
           {error}
         </div>
       )}
 
-      {loading && <p className="text-sm text-slate-600">Loading catagories…</p>}
+      {loading && <p className="text-sm text-[color:var(--text-secondary)]">Loading categories…</p>}
 
       {!loading && rows.length === 0 && !error && (
-        <p className="text-sm text-slate-600">No category data.</p>
+        <p className="text-sm text-[color:var(--text-secondary)]">No category data.</p>
       )}
 
       <div
-        className={`space-y-4 ${scrollable ? "max-h-72 overflow-y-scroll pr-1" : ""}`}
+        className={`space-y-3 ${scrollable ? "max-h-72 overflow-y-scroll pr-1" : ""}`}
         style={
           scrollable
             ? {
                 scrollbarWidth: "thin",
-                scrollbarColor: "#cbd5e1 transparent",
+                scrollbarColor: "var(--electric-blue) transparent",
                 scrollbarGutter: "stable"
               }
             : undefined
         }
       >
         {rows.map((row) => (
-          <div key={row.label} className="space-y-2 rounded-2xl border border-[#f1f1f1] bg-[#fafafa]">
-            <div className="text-sm font-medium text-slate-800 truncate pr-2 tracking-wide">{row.label}</div>
-            {renderBar("IN", row.in, { total: "#d7eff3", unique: "#2f9aa8" }, `${row.label}-in`)}
-            {renderBar("OUT", row.out, { total: "#fde7d2", unique: "#f58633" }, `${row.label}-out`)}
+          <div
+            key={row.label}
+            className="space-y-2 rounded-2xl p-3 border border-[color:var(--border-light)] bg-[rgba(0,0,0,0.02)] hover:shadow-[var(--shadow-md)] transition-all"
+          >
+            <div className="text-sm font-semibold 
+                            bg-gradient-to-r from-[color:var(--electric-blue)] to-[color:var(--primary-orange)] 
+                            bg-clip-text text-transparent truncate pr-2">
+              {row.label}
+            </div>
+            {renderBar("IN", row.in, { total: "rgba(0,169,242,0.25)", unique: "var(--electric-blue)" }, `${row.label}-in`)}
+            {renderBar("OUT", row.out, { total: "rgba(224,68,32,0.25)", unique: "var(--primary-orange)" }, `${row.label}-out`)}
           </div>
         ))}
       </div>
