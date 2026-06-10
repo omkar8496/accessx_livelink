@@ -19,7 +19,7 @@ export function CateUniqueCount() {
       const prev = acc.get(cat) || {
         label: cat,
         in: { count: 0, unique: 0 },
-        out: { count: 0, unique: 0 }
+        out: { count: 0, unique: 0 },
       };
 
       const countVal = Number(item.count) || 0;
@@ -38,7 +38,7 @@ export function CateUniqueCount() {
     }, new Map());
 
     return Array.from(aggregated.values()).sort(
-      (a, b) => b.in.count + b.out.count - (a.in.count + a.out.count)
+      (a, b) => b.in.count + b.out.count - (a.in.count + a.out.count),
     );
   }, [catData]);
 
@@ -54,27 +54,30 @@ export function CateUniqueCount() {
     const widthCount = Math.max((data.count / maxValue) * 100, 2);
     const widthUnique = Math.min(
       Math.max((data.unique / maxValue) * 100, 2),
-      widthCount
+      widthCount,
     );
     return (
       <div key={key} className="space-y-1">
         <div className="grid grid-cols-[1fr_auto] items-center gap-3 text-xs font-semibold">
-          <div className="relative h-3 w-full overflow-hidden rounded-full bg-[color:var(--egg-white)]">
+          <div className="relative h-3 w-full overflow-hidden rounded-full bg-(--egg-white)">
             <div
               className="absolute left-0 top-0 h-full rounded-full transition-all"
               style={{ width: `${widthCount}%`, backgroundColor: colors.total }}
             />
             <div
               className="absolute left-0 top-0 h-full rounded-full transition-all"
-              style={{ width: `${widthUnique}%`, backgroundColor: colors.unique }}
+              style={{
+                width: `${widthUnique}%`,
+                backgroundColor: colors.unique,
+              }}
             />
-            <div className="absolute inset-0 flex items-center pl-2 text-[10px] font-bold text-[color:var(--text-primary)]">
+            <div className="absolute inset-0 flex items-center pl-2 text-[10px] font-bold text-(--text-primary)">
               {dirLabel}
             </div>
           </div>
-          <div className="grid grid-cols-2 min-w-[120px] text-right font-bold">
-            <span className="text-[color:var(--electric-blue)]">{data.unique}</span>
-            <span className="text-[color:var(--primary-orange)]">{data.count}</span>
+          <div className="grid grid-cols-2 min-w-30 text-right font-bold">
+            <span className="text-(--electric-blue)">{data.unique}</span>
+            <span className="text-(--primary-orange)">{data.count}</span>
           </div>
         </div>
       </div>
@@ -82,29 +85,29 @@ export function CateUniqueCount() {
   };
 
   return (
-    <div className="rounded-3xl border border-[color:var(--border-light)] bg-[color:var(--bg-secondary)] p-6 shadow-[var(--shadow-lg)] hover:shadow-[var(--shadow-xl)] transition-all">
+    <div className="rounded-3xl border border-(--border-light) bg-(--bg-secondary) p-6 shadow-(--shadow-lg) hover:shadow-(--shadow-xl) transition-all">
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-lg font-[family-name:var(--font-chillax)] font-semibold 
-                       bg-gradient-to-r from-[color:var(--electric-blue)] to-[color:var(--primary-orange)] 
-                       bg-clip-text text-transparent">
+        <h3 className="text-lg font-(family-name:--font-chillax) font-semibold text-(--text-primary)">
           Category Count
         </h3>
-        <div className="grid grid-cols-2 text-xs font-bold uppercase tracking-wide min-w-[130px] text-right">
-          <span className="text-[color:var(--electric-blue)]">Unique</span>
-          <span className="text-[color:var(--primary-orange)]">Total</span>
+        <div className="grid grid-cols-2 text-xs font-bold uppercase tracking-wide min-w-32.5 text-right">
+          <span className="text-(--electric-blue)">Unique</span>
+          <span className="text-(--primary-orange)">Total</span>
         </div>
       </div>
 
       {error && (
-        <div className="mb-3 rounded-lg border border-[color:var(--accent-red)] bg-[rgba(233,65,32,0.08)] px-3 py-2 text-sm text-[color:var(--accent-red)]">
+        <div className="mb-3 rounded-lg border border-(--accent-red) bg-[rgba(233,65,32,0.08)] px-3 py-2 text-sm text-(--accent-red)">
           {error}
         </div>
       )}
 
-      {loading && <p className="text-sm text-[color:var(--text-secondary)]">Loading categories…</p>}
+      {loading && (
+        <p className="text-sm text-(--text-secondary)">Loading categories…</p>
+      )}
 
       {!loading && rows.length === 0 && !error && (
-        <p className="text-sm text-[color:var(--text-secondary)]">No category data.</p>
+        <p className="text-sm text-(--text-secondary)">No category data.</p>
       )}
 
       <div
@@ -114,7 +117,7 @@ export function CateUniqueCount() {
             ? {
                 scrollbarWidth: "thin",
                 scrollbarColor: "var(--electric-blue) transparent",
-                scrollbarGutter: "stable"
+                scrollbarGutter: "stable",
               }
             : undefined
         }
@@ -122,15 +125,30 @@ export function CateUniqueCount() {
         {rows.map((row) => (
           <div
             key={row.label}
-            className="space-y-2 rounded-2xl p-3 border border-[color:var(--border-light)] bg-[rgba(0,0,0,0.02)] hover:shadow-[var(--shadow-md)] transition-all"
+            className="space-y-2 rounded-2xl p-3 border border-(--border-light) bg-[rgba(0,0,0,0.02)] hover:shadow-(--shadow-md) transition-all"
           >
-            <div className="text-sm font-semibold 
-                            bg-gradient-to-r from-[color:var(--electric-blue)] to-[color:var(--primary-orange)] 
-                            bg-clip-text text-transparent truncate pr-2">
+            <div
+              className="text-sm font-semibold 
+                            bg-linear-to-r from-(--electric-blue) to-(--primary-orange) 
+                            bg-clip-text text-transparent truncate pr-2"
+            >
               {row.label}
             </div>
-            {renderBar("IN", row.in, { total: "rgba(0,169,242,0.25)", unique: "var(--electric-blue)" }, `${row.label}-in`)}
-            {renderBar("OUT", row.out, { total: "rgba(224,68,32,0.25)", unique: "var(--primary-orange)" }, `${row.label}-out`)}
+            {renderBar(
+              "IN",
+              row.in,
+              { total: "rgba(0,169,242,0.25)", unique: "var(--electric-blue)" },
+              `${row.label}-in`,
+            )}
+            {renderBar(
+              "OUT",
+              row.out,
+              {
+                total: "rgba(224,68,32,0.25)",
+                unique: "var(--primary-orange)",
+              },
+              `${row.label}-out`,
+            )}
           </div>
         ))}
       </div>

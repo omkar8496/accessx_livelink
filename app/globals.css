@@ -1,4 +1,8 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+
 
 :root {
   /* Brand Colors */
@@ -68,6 +72,7 @@
   --header-height: 120px;
   --header-padding-x: 1.25rem;
   --header-padding-y: 1rem;
+ 
 }
 
 @media (min-width: 768px) {

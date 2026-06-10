@@ -74,6 +74,9 @@ Install dependencies:
 
 ```bash
 npm install
+yarn install
+npx shadcn@latest add chart
+npm install recharts
 ```
 
 Run the development server:
@@ -121,186 +124,97 @@ public/
 
 ---
 
-## Fonts Configuration
+## UI Enhancements Completed
 
-The project uses local fonts loaded through Next.js localFont:
+### Global Styling
 
-### Chillax
+* Configured custom brand color variables.
+* Added global design tokens for colors, spacing, shadows, and typography.
+* Integrated custom fonts:
 
-Used primarily for headings and branding.
-
-### Poppins
-
-Used as the primary dashboard font.
-
-### VCR
-
-Available for specific dashboard elements where required.
-
-Fonts are stored under:
-
-```text
-public/fonts/
-```
-
----
-
-## Global Styling
-
-Implemented global styling using:
-
-* Brand color variables
-* Global typography setup
-* Dashboard background styling
-* Font configuration
-* Reusable design tokens
-
-Brand Colors:
-
-```css
---primary-orange: #E04420;
---black: #1C1C1C;
---electric-blue: #341CD6;
---light-blue: #00A9F2;
---purple: #D5B7FF;
---egg-white: #EBEBEB;
-```
-
----
-
-## UI Improvements Completed
+  * Chillax
+  * Poppins
+  * VCR
 
 ### Header Component
 
-* Added AtomX-inspired gradient styling
-* Improved typography hierarchy
-* Improved event title visibility
-* Styled venue information
-* Improved timestamp visibility
-* Added modern card appearance
+* Redesigned header layout.
+* Improved logo sizing and alignment.
+* Added responsive date and time display.
+* Optimized spacing for desktop and mobile views.
+* Applied brand-based styling following AtomX guidelines.
 
-### Category Count Component
+### HorizontalGraph Component
 
-* Improved card layout
-* Added visual hierarchy
-* Improved count presentation
-* Added styled progress indicators
-* Improved spacing and readability
+* Improved filter section styling.
+* Redesigned category distribution visualization.
+* Replaced custom SVG implementation with Recharts Pie Chart.
+* Preserved existing API and filtering logic.
+* Updated chart colors according to brand palette.
+* Improved legend and card presentation.
 
-### Gate Count Component
+### Category Count & Gate Count
 
-* Improved visual layout
-* Enhanced progress indicators
-* Better typography and spacing
-* Improved count visualization
+* Updated typography hierarchy.
+* Applied brand colors for labels and metrics.
+* Improved card appearance and spacing.
+* Maintained existing data calculations and logic.
 
-### Dashboard Styling
+### Device Data Component
 
-* Improved card appearance
-* Improved spacing and alignment
-* Better visual grouping of sections
-* Applied consistent design language across components
+* Reviewed card-based layout.
+* Improved responsiveness and visual consistency.
+* Evaluated modern dashboard card patterns.
 
----
+### Last Twenty Records
 
-## Important Development Notes
-
-### Live Graph
-
-Do not modify:
-
-* Live graph logic
-* Data refresh mechanism
-* Graph data calculations
-
-Only UI styling around the graph should be modified when required.
-
-### Query Parameters
-
-Dashboard uses encoded query parameters:
-
-```text
-/accessx/?e=<encoded-value>
-```
-
-### Shared State
-
-Dashboard data is managed using:
-
-```text
-AccessDataContext
-```
-
-which provides:
-
-* Category data
-* Gate data
-* Device data
-* Access records
-* Graph data
+* Improved table styling.
+* Enhanced readability and spacing.
+* Applied consistent design language across dashboard components.
 
 ---
 
-## Deployment Notes
+## Research & Learning
 
-Ensure:
+During development, research was conducted on:
 
-```js
-trailingSlash: true
-```
+### UI Libraries
 
-is configured inside:
+* Tremor
+* Recharts
+* Victory
+* ApexCharts
+* Shadcn UI
 
-```text
-next.config.mjs
-```
+### Next.js Concepts
 
-to support deployment routing requirements.
+* Component structure
+* Data flow
+* Props
+* Context API
+* Responsive UI development
 
----
+### Dashboard Design
 
-## Future UI Improvements
-
-Planned enhancements:
-
-* Additional dashboard UI refinements
-* Improved table styling
-* Improved card system
-* Better responsive behavior
-* UI library evaluation and integration research
-* Chart and visualization design improvements while preserving existing data logic
+* SaaS dashboard patterns
+* Analytics dashboard layouts
+* Mobile-first responsive design
+* Brand-consistent component design
 
 ---
 
-## Available Scripts
+## Current Focus
 
-Start development server:
-
-```bash
-npm run dev
-```
-
-Build production version:
-
-```bash
-npm run build
-```
-
-Start production server:
-
-```bash
-npm start
-```
+* Further UI refinement component-by-component.
+* Mobile responsiveness improvements.
+* Consistent application of AtomX brand guidelines.
+* Exploring improved dashboard layouts using modern design patterns.
 
 ---
 
-## Author Notes
+## Notes
 
-Current development focuses on:
-
-* UI modernization
-* Tailwind CSS styling
-* Brand guideline implementation
-* Component-level UI improvements
-
-while preserving all existing dashboard functionality and business logic.
+* No API logic has been modified.
+* No Context API functionality has been changed.
+* Existing business logic and data calculations remain intact.
+* All changes are currently focused on UI/UX improvements only.

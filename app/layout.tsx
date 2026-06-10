@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Geist } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const chillax = localFont({
   src: [
@@ -41,9 +45,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${chillax.variable} ${poppins.variable} ${vcr.variable}`}
+      className={cn(chillax.variable, poppins.variable, vcr.variable, "font-sans", geist.variable)}
     >
-      <body className="flex flex-col min-h-screen bg-[color:var(--bg-primary)] text-[color:var(--text-primary)]">
+      <body className="flex flex-col min-h-screen bg-(--bg-primary) text-(--text-primary)">
         {children}
       </body>
     </html>

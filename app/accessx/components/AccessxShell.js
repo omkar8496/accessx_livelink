@@ -80,18 +80,18 @@ export function AccessxShell({ children }) {
 
   return (
     <RequireLogin>
-      <div className="min-h-[100dvh] w-full bg-[color:var(--bg-primary)] px-3 pb-8 pt-4 md:px-6">
+      <div className="min-h-dvh w-full bg-(--bg-primary) px-3 pb-8 pt-4 md:px-6">
         <div className="mx-auto w-full max-w-5xl">
           <EventHeader event={eventData} />
 
           {error && (
-            <div className="mb-4 rounded-[color:var(--radius-lg)] border border-[color:var(--accent-red)] bg-[rgba(233,65,32,0.08)] px-4 py-2 text-sm text-[color:var(--accent-red)]">
+            <div className="mb-4 rounded-lg border border-(--accent-red) bg-[rgba(233,65,32,0.08)] px-4 py-2 text-sm text-(--accent-red)">
               {error}
             </div>
           )}
 
           {loading && !error && (
-            <div className="mb-4 rounded-[color:var(--radius-lg)] border border-[color:var(--border-light)] bg-[color:var(--bg-secondary)] px-4 py-2 text-sm text-[color:var(--text-secondary)]">
+            <div className="mb-4 rounded-lg border border-(--border-light) bg-(--bg-secondary) px-4 py-2 text-sm text-(--text-secondary)">
               Loading event details...
             </div>
           )}

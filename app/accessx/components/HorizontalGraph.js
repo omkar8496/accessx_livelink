@@ -1,18 +1,16 @@
 "use client";
-
 import { useEffect, useMemo, useRef, useState } from "react";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import { fetchAccessGateCatg } from "./api";
 import { getAuthSession } from "@livelink/lib/authStorage";
 
 const COLORS = [
-  "#f97316",
-  "#0ea5e9",
-  "#ec4899",
-  "#22c55e",
-  "#a855f7",
-  "#06b6d4",
-  "#f59e0b",
-  "#ef4444"
+  "#E04420",
+  "#00A9F2",
+  "#341CD6",
+  "#F7825C",
+  "#4FC3F7",
+  "#D5B7FF",
 ];
 
 export function HorizontalGraph() {
@@ -44,7 +42,8 @@ export function HorizontalGraph() {
           setData(Array.isArray(resp) ? resp : []);
         }
       } catch (err) {
-        if (!cancelled) setError(err.message || "Unable to load category split data.");
+        if (!cancelled)
+          setError(err.message || "Unable to load category split data.");
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -57,14 +56,18 @@ export function HorizontalGraph() {
   }, []);
 
   const gateOptions = useMemo(() => {
-    const unique = Array.from(new Set((data || []).map((item) => item.gate_name || "Unknown")));
+    const unique = Array.from(
+      new Set((data || []).map((item) => item.gate_name || "Unknown")),
+    );
     return ["ALL", ...unique];
   }, [data]);
 
   const filtered = useMemo(() => {
     let items = data || [];
     if (selectedGate && selectedGate !== "ALL") {
-      items = items.filter((item) => (item.gate_name || "Unknown") === selectedGate);
+      items = items.filter(
+        (item) => (item.gate_name || "Unknown") === selectedGate,
+      );
     }
     items = items.filter((item) => {
       const dir = (item.direction || "").toUpperCase();
@@ -72,7 +75,9 @@ export function HorizontalGraph() {
       return direction === "OUT";
     });
     if (typeFilter !== "ALL") {
-      items = items.filter((item) => (item.type || "").toLowerCase() === typeFilter.toLowerCase());
+      items = items.filter(
+        (item) => (item.type || "").toLowerCase() === typeFilter.toLowerCase(),
+      );
     }
     return items;
   }, [data, selectedGate, direction, typeFilter]);
@@ -83,7 +88,7 @@ export function HorizontalGraph() {
       const prev = acc.get(key) || { count: 0, unique: 0 };
       acc.set(key, {
         count: prev.count + (Number(item.count) || 0),
-        unique: prev.unique + (Number(item.unique_count) || 0)
+        unique: prev.unique + (Number(item.unique_count) || 0),
       });
       return acc;
     }, new Map());
@@ -93,7 +98,7 @@ export function HorizontalGraph() {
         label,
         count: values.count,
         unique: values.unique,
-        color: COLORS[idx % COLORS.length]
+        color: COLORS[idx % COLORS.length],
       }))
       .sort((a, b) => b.unique - a.unique);
 
@@ -103,13 +108,13 @@ export function HorizontalGraph() {
         acc.unique += item.unique;
         return acc;
       },
-      { total: 0, unique: 0 }
+      { total: 0, unique: 0 },
     );
 
     return {
       segments: list,
       totalCount: totals.total,
-      totalUnique: totals.unique
+      totalUnique: totals.unique,
     };
   }, [filtered]);
 
@@ -126,22 +131,29 @@ export function HorizontalGraph() {
           const offset = -acc.cumulative * circumference;
           return {
             cumulative: acc.cumulative + fraction,
-            items: [...acc.items, { ...seg, dashArray, offset }]
+            items: [...acc.items, { ...seg, dashArray, offset }],
           };
         },
-        { cumulative: 0, items: [] }
+        { cumulative: 0, items: [] },
       ).items,
-    [circumference, segments, totalUnique]
+    [circumference, segments, totalUnique],
   );
 
+  const chartData = segments.map((seg) => ({
+    name: seg.label,
+    value: seg.unique,
+    color: seg.color,
+  }));
+
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-2">
+    <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-md">
+      {/* Filters */}
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center gap-3">
           <select
             value={selectedGate}
             onChange={(e) => setSelectedGate(e.target.value)}
-            className="min-w-[110px] rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm"
+            className="min-w-30 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             {gateOptions.map((gate) => (
               <option key={gate} value={gate}>
@@ -150,16 +162,16 @@ export function HorizontalGraph() {
             ))}
           </select>
 
-          <div className="flex items-center rounded-full border border-slate-200 bg-white p-1 shadow-sm">
+          <div className="flex items-center rounded-full border border-slate-300 bg-white p-1 shadow-sm">
             {["IN", "OUT"].map((dir) => (
               <button
                 key={dir}
                 type="button"
                 onClick={() => setDirection(dir)}
-                className={`min-w-[48px] px-3 py-1 text-xs font-semibold rounded-full transition ${
+                className={`min-w-13 px-3 py-1 text-xs font-semibold rounded-full transition focus:outline-none focus:ring-2 focus:ring-(--electric-blue) ${
                   direction === dir
-                    ? "bg-[#2f9aa8] text-white"
-                    : "text-slate-700"
+                    ? "bg-(--black) text-white"
+                    : "text-(--black) hover:bg-(--egg-white)"
                 }`}
               >
                 {dir}
@@ -170,90 +182,91 @@ export function HorizontalGraph() {
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
-            className="min-w-[90px] rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm"
+            className="min-w-22.5 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="ALL">All</option>
             <option value="nfc">nfc</option>
             <option value="qr">qr</option>
           </select>
         </div>
-        <div className="flex-1" />
       </div>
 
+      {/* Error */}
       {error && (
-        <div className="mt-3 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+        <div className="mt-4 rounded-md border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-700">
           404 (Category Split data)
         </div>
       )}
 
+      {/* Loading */}
       {loading && !error && (
-        <div className="mt-4 h-[220px] animate-pulse rounded-2xl bg-slate-100" />
+        <div className="mt-6 h-55 animate-pulse rounded-xl bg-slate-100" />
       )}
 
+      {/* Empty */}
       {!loading && !error && segments.length === 0 && (
-        <p className="mt-3 text-sm text-slate-600">No category data.</p>
+        <p className="mt-4 text-sm text-slate-600">No category data.</p>
       )}
 
+      {/* Graph */}
       {!loading && !error && segments.length > 0 && (
-        <div className="mt-3">
-          <div className="relative flex flex-col items-center gap-3 rounded-2xl bg-slate-50 px-3 py-3">
-            <div className="flex w-full items-center justify-between px-3">
+        <div className="mt-5">
+          <div className="relative flex flex-col items-center gap-4 rounded-xl border border-[rgba(0,169,242,0.15)] bg-linear-to-br from-[rgba(0,169,242,0.04)] to-[rgba(224,68,32,0.04)] px-4 py-4">
+            <div className="flex w-full items-center justify-between">
               <div className="text-center">
-                <p className="text-base font-bold text-[#2f9aa8]">Unique</p>
-                <p className="text-xl font-bold text-slate-900">{totalUnique}</p>
+                <p className="text-sm font-semibold text-blue-500">Unique</p>
+                <p className="text-lg font-bold text-slate-900">
+                  {totalUnique}
+                </p>
               </div>
-              <svg
-                width="180"
-                height="180"
-                viewBox="0 0 180 180"
-                className="drop-shadow-sm"
-              >
-                <circle
-                  cx="90"
-                  cy="90"
-                  r={radius}
-                  fill="none"
-                  stroke="#e2e8f0"
-                  strokeWidth="20"
-                />
-                {arcs.map((arc, idx) => (
-                  <circle
-                    key={arc.label + idx}
-                    cx="90"
-                    cy="90"
-                    r={radius}
-                    fill="none"
-                    stroke={arc.color}
-                    strokeWidth="20"
-                    strokeDasharray={arc.dashArray}
-                    strokeDashoffset={arc.offset}
-                    strokeLinecap="round"
-                    className="transition-all duration-500"
-                  />
-                ))}
-              </svg>
+
+              {/* Pie Chart */}
+              <div className="h-55 w-55">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={chartData}
+                      dataKey="value"
+                      nameKey="name"
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={90}
+                    >
+                      {chartData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+
+                    <Tooltip />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+
               <div className="text-center">
-                <p className="text-base font-bold text-[#ef4444]">Total</p>
-                <p className="text-xl font-bold text-slate-900">{totalCount}</p>
+                <p className="text-sm font-semibold text-red-500">Total</p>
+                <p className="text-lg font-bold text-slate-900">{totalCount}</p>
               </div>
             </div>
           </div>
 
-          <div className="mt-3 space-y-1.5 max-h-48 overflow-y-auto pr-1">
-            {arcs.map((arc, idx) => (
+          {/* Legend */}
+          <div className="mt-4 max-h-48 overflow-y-auto space-y-2 pr-1">
+            {segments.map((seg, idx) => (
               <div
-                key={arc.label + idx}
-                className="flex items-center justify-between rounded-lg border border-slate-100 px-3 py-1.5 text-xs"
+                key={seg.label + idx}
+                className="flex items-center justify-between rounded-md border border-slate-200 bg-white px-3 py-2 text-xs shadow-sm"
               >
                 <div className="flex items-center gap-2">
                   <span
                     className="h-3 w-3 rounded-full"
-                    style={{ backgroundColor: arc.color }}
+                    style={{ backgroundColor: seg.color }}
                   />
-                  <span className="font-semibold text-slate-800">{arc.label || "Unknown"}</span>
+                  <span className="font-medium text-slate-800">
+                    {seg.label || "Unknown"}
+                  </span>
                 </div>
-              <div className="text-right text-slate-700">
-                  <div className="font-semibold">{arc.unique}</div>
+                <div className="text-right text-slate-700">
+                  <div className="font-semibold">{seg.unique}</div>
                 </div>
               </div>
             ))}

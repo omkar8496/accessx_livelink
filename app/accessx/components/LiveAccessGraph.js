@@ -104,14 +104,14 @@ export function LiveAccessGraph() {
   const barAreaHeight = 260;
 
   return (
-    <div className="rounded-[color:var(--radius-2xl)] bg-[color:var(--light-blue)] p-3 md:p-4 text-white shadow-[var(--shadow-xl)]">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 md:gap-2 text-xs md:text-sm font-[var(--fw-semibold)] tracking-[0.15em] text-white/90">
+    <div className="rounded-2xl bg-(--light-blue) p-3 md:p-4 text-white shadow-(--shadow-xl)">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 md:gap-2 text-xs md:text-sm font-(--fw-semibold) tracking-[0.15em] text-white/90">
         <span>Current</span>
         <span className="tracking-normal text-white/80 text-xs">Hourwise</span>
       </div>
 
       {error && (
-        <div className="mt-2 md:mt-3 rounded-[color:var(--radius-lg)] border border-white/30 bg-white/10 px-2 md:px-3 py-1.5 md:py-2 text-xs text-white">
+        <div className="mt-2 md:mt-3 rounded-lg border border-white/30 bg-white/10 px-2 md:px-3 py-1.5 md:py-2 text-xs text-white">
           {error}
         </div>
       )}
@@ -120,7 +120,7 @@ export function LiveAccessGraph() {
         <div className="mt-3 md:mt-4">
           <div className="flex w-full overflow-x-auto md:overflow-visible">
             {/* Y-axis labels */}
-            <div className="flex flex-col justify-between text-[10px] md:text-xs font-[var(--fw-semibold)] text-white/80 min-w-6 md:min-w-10 items-end pr-0.5 md:pr-1.5 select-none flex-shrink-0 h-[120px] md:h-[160px]">
+            <div className="flex flex-col justify-between text-[10px] md:text-xs font-(--fw-semibold) text-white/80 min-w-6 md:min-w-10 items-end pr-0.5 md:pr-1.5 select-none shrink-0 h-30 md:h-40">
               {yLabels.map((tick) => (
                 <span key={tick} className="leading-none">{tick}</span>
               ))}
@@ -128,7 +128,7 @@ export function LiveAccessGraph() {
             {/* Bar area */}
             <div className="flex-1 min-w-0">
               <div className="overflow-x-auto w-full">
-                <div className="flex h-[120px] md:h-[160px] items-end gap-0.25 md:gap-1 min-w-[280px] md:min-w-0 px-0.5 md:px-0">
+                <div className="flex h-30 md:h-40 items-end gap-px md:gap-1 min-w-70 md:min-w-0 px-0.5 md:px-0">
                   {loading && (
                     <div className="text-xs text-white/80">Loading…</div>
                   )}
@@ -142,7 +142,7 @@ export function LiveAccessGraph() {
                       return (
                         <div key={bar.hour_start} className="flex min-w-1 md:min-w-2 flex-1 flex-col items-center justify-end">
                           <div
-                            className="w-1 md:w-2 rounded-full border border-white/70 bg-gradient-to-b from-[color:var(--primary-orange)] via-[color:var(--purple)] to-white shadow-[0_8px_20px_rgba(0,0,0,0.15)]"
+                            className="w-1 md:w-2 rounded-full border border-white/70 bg-linear-to-b from-(--primary-orange) via-(--purple) to-white shadow-[0_8px_20px_rgba(0,0,0,0.15)]"
                             style={{ height: `${heightPx}px` }}
                           />
                         </div>
@@ -150,13 +150,13 @@ export function LiveAccessGraph() {
                     })}
                 </div>
                 {/* X-axis labels and bar values */}
-                <div className="flex mt-0.5 md:mt-1.5 gap-0.25 md:gap-1 min-w-[280px] md:min-w-0 px-0.5 md:px-0">
+                <div className="flex mt-0.5 md:mt-1.5 gap-px md:gap-1 min-w-70 md:min-w-0 px-0.5 md:px-0">
                   {!loading && bars.map((bar) => {
                     const val = Number(bar.count) || 1;
                     return (
                       <div key={bar.hour_start} className="flex min-w-1 md:min-w-2 flex-1 flex-col items-center justify-start">
-                        <span className="text-[8px] md:text-xs font-[var(--fw-semibold)] text-white/90 whitespace-nowrap leading-tight">{formatHourOnly(bar.hour_start)}</span>
-                        <span className="text-[8px] md:text-xs font-[var(--fw-semibold)] text-white/80 leading-none text-center">{val}</span>
+                        <span className="text-[8px] md:text-xs font-(--fw-semibold) text-white/90 whitespace-nowrap leading-tight">{formatHourOnly(bar.hour_start)}</span>
+                        <span className="text-[8px] md:text-xs font-(--fw-semibold) text-white/80 leading-none text-center">{val}</span>
                       </div>
                     );
                   })}
