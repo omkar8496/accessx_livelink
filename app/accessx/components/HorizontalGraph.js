@@ -146,7 +146,7 @@ export function HorizontalGraph() {
   }));
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-md">
+    <div className="rounded-xl border border-slate-200 bg-[#FEEBDF] p-5 shadow-md">
       {/* Filters */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-wrap items-center gap-3">
@@ -200,7 +200,7 @@ export function HorizontalGraph() {
 
       {/* Loading */}
       {loading && !error && (
-        <div className="mt-6 h-55 animate-pulse rounded-xl bg-slate-100" />
+        <div className="mt-6 h-56 animate-pulse rounded-xl bg-slate-100" />
       )}
 
       {/* Empty */}
@@ -221,7 +221,7 @@ export function HorizontalGraph() {
               </div>
 
               {/* Pie Chart */}
-              <div className="h-55 w-55">
+              <div className="h-56 w-56">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie

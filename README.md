@@ -35,24 +35,43 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details. -->
 
+
 # AccessX Live Dashboard
 
-## Overview
+A responsive event access monitoring dashboard built with Next.js for tracking live event activity, gate access statistics, category-wise counts, device information, and recent access records.
 
-AccessX is a Next.js-based live access control dashboard used for monitoring event access data, gate activity, category-wise statistics, device information, and recent access records.
+## Features
 
-The dashboard receives live event data and displays it through various visual components such as graphs, category counts, gate counts, device data tables, and access logs.
-
----
+* Live event monitoring dashboard
+* Real-time access analytics
+* Gate-wise access tracking
+* Category distribution visualization
+* Device activity monitoring
+* Recent access records table
+* Mobile responsive design
+* Recharts Pie Chart integration
+* Context API state management
+* Brand-based UI styling
 
 ## Tech Stack
 
-* Next.js (App Router)
+**Frontend**
+
+* Next.js
 * React
 * Tailwind CSS
-* JavaScript
-* Context API
-* Local Fonts (Chillax, Poppins, VCR)
+* Recharts
+
+**State Management**
+
+* React Context API
+
+**Fonts**
+
+* Chillax
+* Poppins
+* VCR OSD Mono
+
 
 ---
 
@@ -61,13 +80,13 @@ The dashboard receives live event data and displays it through various visual co
 Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone <https://github.com/omkar8496/accessx_livelink.git>
 ```
 
 Navigate to the project:
 
 ```bash
-cd accessx_livelink
+cd accessx-dashboard
 ```
 
 Install dependencies:
@@ -79,15 +98,19 @@ npx shadcn@latest add chart
 npm install recharts
 ```
 
-Run the development server:
+Start the development server:
 
 ```bash
 npm run dev
 ```
 
+---
+
+## Running the Project
+
 Open:
 
-```bash
+```text
 http://localhost:3000/accessx/?e=MTcwNg==
 ```
 
@@ -97,20 +120,20 @@ http://localhost:3000/accessx/?e=MTcwNg==
 
 ```text
 app/
-│
 ├── accessx/
 │   ├── components/
+│   │   ├── AccessDataContext.js
+│   │   ├── AccessxShell.js
+│   │   ├── CateUniqueCount.js
+│   │   ├── Device_Data.js
+│   │   ├── GateUniqueCount.js
 │   │   ├── Header.js
 │   │   ├── HorizontalGraph.js
-│   │   ├── LiveAccessGraph.js
-│   │   ├── CateUniqueCount.js
-│   │   ├── GateUniqueCount.js
-│   │   ├── Device_Data.js
 │   │   ├── LastTwentyRecords.js
-│   │   └── AccessDataContext.js
-│   │
-│   ├── page.js
-│   └── layout.js
+│   │   ├── LiveAccessGraph.js
+│   │   └── api.js
+│   ├── layout.js
+│   └── page.js
 │
 ├── globals.css
 └── layout.tsx
@@ -124,97 +147,140 @@ public/
 
 ---
 
-## UI Enhancements Completed
+## Components
 
-### Global Styling
+### Header
 
-* Configured custom brand color variables.
-* Added global design tokens for colors, spacing, shadows, and typography.
-* Integrated custom fonts:
+* Event information
+* Venue details
+* Live date and time
+* Responsive layout
 
-  * Chillax
-  * Poppins
-  * VCR
+### HorizontalGraph
 
-### Header Component
+* Category distribution
+* Gate filtering
+* IN / OUT filtering
+* NFC / QR filtering
+* Recharts Pie Chart
 
-* Redesigned header layout.
-* Improved logo sizing and alignment.
-* Added responsive date and time display.
-* Optimized spacing for desktop and mobile views.
-* Applied brand-based styling following AtomX guidelines.
+### Gate Count
 
-### HorizontalGraph Component
+* Gate-wise statistics
+* Unique count tracking
+* Total count tracking
 
-* Improved filter section styling.
-* Redesigned category distribution visualization.
-* Replaced custom SVG implementation with Recharts Pie Chart.
-* Preserved existing API and filtering logic.
-* Updated chart colors according to brand palette.
-* Improved legend and card presentation.
+### Category Count
 
-### Category Count & Gate Count
+* Category-based access statistics
+* Unique vs total comparison
 
-* Updated typography hierarchy.
-* Applied brand colors for labels and metrics.
-* Improved card appearance and spacing.
-* Maintained existing data calculations and logic.
+### Device Data
 
-### Device Data Component
-
-* Reviewed card-based layout.
-* Improved responsiveness and visual consistency.
-* Evaluated modern dashboard card patterns.
+* Device activity information
+* Responsive card layout
 
 ### Last Twenty Records
 
-* Improved table styling.
-* Enhanced readability and spacing.
-* Applied consistent design language across dashboard components.
+* Recent access logs
+* Mobile-friendly design
+
+### Live Access Graph
+
+* Real-time access activity visualization
 
 ---
 
-## Research & Learning
+## UI Improvements Implemented
 
-During development, research was conducted on:
-
-### UI Libraries
-
-* Tremor
-* Recharts
-* Victory
-* ApexCharts
-* Shadcn UI
-
-### Next.js Concepts
-
-* Component structure
-* Data flow
-* Props
-* Context API
-* Responsive UI development
-
-### Dashboard Design
-
-* SaaS dashboard patterns
-* Analytics dashboard layouts
-* Mobile-first responsive design
-* Brand-consistent component design
+* Improved Header design
+* Responsive Header layout
+* Recharts Pie Chart integration
+* Enhanced card styling
+* Improved spacing and typography
+* Brand color implementation
+* Mobile responsiveness improvements
+* Font system integration
 
 ---
 
-## Current Focus
+## Environment Requirements
 
-* Further UI refinement component-by-component.
-* Mobile responsiveness improvements.
-* Consistent application of AtomX brand guidelines.
-* Exploring improved dashboard layouts using modern design patterns.
+* Node.js 18+
+* npm 9+
+
+---
+
+## Available Scripts
+
+Start development server:
+
+```bash
+npm run dev
+```
+
+Create production build:
+
+```bash
+npm run build
+```
+
+Run production build:
+
+```bash
+npm start
+```
+
+Run linting:
+
+```bash
+npm run lint
+```
+
+---
+
+## Design Guidelines
+
+### Primary Colors
+
+```css
+Primary Orange: #E04420
+Electric Blue: #00A9F2
+Purple: #341CD6
+Black: #1C1C1C
+Egg White: #EBEBEB
+```
+
+### Typography
+
+| Font    | Usage              |
+| ------- | ------------------ |
+| Chillax | Headings           |
+| Poppins | Body Text          |
+| VCR     | Counters & Metrics |
 
 ---
 
 ## Notes
 
-* No API logic has been modified.
-* No Context API functionality has been changed.
-* Existing business logic and data calculations remain intact.
-* All changes are currently focused on UI/UX improvements only.
+* Existing API logic should not be modified.
+* Existing Context API implementation should be preserved.
+* Live graph functionality should remain unchanged.
+* UI improvements should focus on responsiveness, accessibility, and visual consistency.
+
+---
+
+## Future Enhancements
+
+* Advanced dashboard filters
+* Additional chart visualizations
+* Enhanced mobile experience
+* Dark mode support
+* Improved analytics views
+
+---
+
+## Authors
+
+* AtomX Design Team
+* AccessX Dashboard Project

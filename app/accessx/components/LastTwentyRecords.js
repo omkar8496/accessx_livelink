@@ -180,7 +180,7 @@ export function LastTwentyRecords() {
   );
 
   return (
-    <div className="rounded-3xl border border-(--border-light) bg-(--bg-secondary) p-6 shadow-(--shadow-lg) transition-all hover:shadow-(--shadow-xl)">
+    <div className="rounded-3xl border border-(--border-light)  bg-[#FEEBDF] p-6 shadow-(--shadow-lg) transition-all hover:shadow-(--shadow-xl)">
       <h3 className="text-lg font-(family-name:--font-chillax) font-(--fw-semibold) text-(--text-primary)">Last 20 Entries</h3>
 
       {error && (

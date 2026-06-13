@@ -56,7 +56,7 @@ export function Device_Data() {
   }, []);
 
   return (
-    <div className="rounded-3xl border border-(--border-light) bg-(--bg-secondary) p-6 shadow-(--shadow-lg) transition-all hover:shadow-(--shadow-xl)">
+    <div className="rounded-3xl border border-(--border-light)  bg-[#FEEBDF] p-6 shadow-(--shadow-lg) transition-all hover:shadow-(--shadow-xl)">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3 flex-wrap">
           <h3 className="text-lg font-(family-name:--font-chillax) font-(--fw-semibold) text-(--text-primary)">
@@ -95,7 +95,7 @@ export function Device_Data() {
       )}
 
       {view === "grid" && (
-        <div className="mt-4 grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           {(expanded ? devices : devices.slice(0, 12)).map((device, idx) => {
             const keyParts = [
               device.id,
@@ -107,12 +107,12 @@ export function Device_Data() {
             return (
               <div
                 key={key}
-                className="relative overflow-hidden rounded-2xl border border-(--border-light) bg-(--bg-secondary) p-4 shadow-(--shadow-md) transition-all hover:shadow-(--shadow-lg)"
+                className="relative overflow-hidden rounded-2xl border border-(--border-light) bg-(--bg-secondary) p-2.5 shadow-(--shadow-md) transition-all hover:shadow-(--shadow-lg)"
               >
                 <div className="absolute right-3 top-3 h-7 w-7 rounded-full border border-(--light-blue)/40 bg-(--bg-secondary) text-center text-sm font-(--fw-semibold) text-(--light-blue) flex items-center justify-center">
                   –
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
                   <div className="flex-1 space-y-1">
                     <p className="text-sm font-(--fw-semibold) text-(--text-primary)">
                       {device.gate_name ? `Gate ${device.gate_name}` : "Gate"}{" "}
@@ -133,9 +133,9 @@ export function Device_Data() {
                       {formatTime(device.latesttime)}
                     </p>
                   </div>
-                  <div className="mx-2 h-14 w-px bg-(--border-light)" />
-                  <div className="flex flex-col items-center justify-center min-w-17.5 pr-8">
-                    <span className="text-2xl font-(--fw-bold) text-(--light-blue)">
+                  <div className="mx-1 h-10 w-px bg-(--border-light)" />
+                  <div className="flex flex-col items-center justify-center min-w-14 pr-3">
+                    <span className="text-xl font-(--fw-bold) text-(--light-blue)">
                       {device.unique_count ?? "—"}
                     </span>
                     <span className="text-xs uppercase tracking-wider text-(--text-tertiary)">

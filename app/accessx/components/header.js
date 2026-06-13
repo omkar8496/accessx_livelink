@@ -54,7 +54,7 @@ export default function EventHeader({ event }) {
   return (
     <header className="w-full bg-(var--egg-white) px-3 pb-4 pt-4 md:px-6">
       <div className="mx-auto w-full max-w-5xl">
-        <div className="relative overflow-hidden rounded-2xl bg-white/80 backdrop-blur shadow-lg ring-1 ring-black/10">
+        <div className="relative overflow-hidden rounded-2xl bg-[#FEEBDF] backdrop-blur shadow-lg ring-1 ring-black/10">
           <div className="flex flex-col items-center gap-3 p-4 text-center md:flex-row md:items-center md:gap-4 md:p-4 md:text-left">
             <div className="flex h-8 items-center justify-center">
               <Image

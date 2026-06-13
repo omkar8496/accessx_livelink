@@ -76,7 +76,7 @@ export function CateUniqueCount() {
             </div>
           </div>
           <div className="grid grid-cols-2 min-w-30 text-right font-bold">
-            <span className="text-(--electric-blue)">{data.unique}</span>
+            <span className="text-(--light-blue)">{data.unique}</span>
             <span className="text-(--primary-orange)">{data.count}</span>
           </div>
         </div>
@@ -85,13 +85,13 @@ export function CateUniqueCount() {
   };
 
   return (
-    <div className="rounded-3xl border border-(--border-light) bg-(--bg-secondary) p-6 shadow-(--shadow-lg) hover:shadow-(--shadow-xl) transition-all">
+    <div className="rounded-3xl border border-(--border-light)  bg-[#FEEBDF] p-6 shadow-(--shadow-lg) hover:shadow-(--shadow-xl) transition-all">
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-lg font-(family-name:--font-chillax) font-semibold text-(--text-primary)">
           Category Count
         </h3>
         <div className="grid grid-cols-2 text-xs font-bold uppercase tracking-wide min-w-32.5 text-right">
-          <span className="text-(--electric-blue)">Unique</span>
+          <span className="text-(--light-blue)">Unique</span>
           <span className="text-(--primary-orange)">Total</span>
         </div>
       </div>
@@ -116,7 +116,7 @@ export function CateUniqueCount() {
           scrollable
             ? {
                 scrollbarWidth: "thin",
-                scrollbarColor: "var(--electric-blue) transparent",
+                scrollbarColor: "var(--light-blue) transparent",
                 scrollbarGutter: "stable",
               }
             : undefined
@@ -128,16 +128,14 @@ export function CateUniqueCount() {
             className="space-y-2 rounded-2xl p-3 border border-(--border-light) bg-[rgba(0,0,0,0.02)] hover:shadow-(--shadow-md) transition-all"
           >
             <div
-              className="text-sm font-semibold 
-                            bg-linear-to-r from-(--electric-blue) to-(--primary-orange) 
-                            bg-clip-text text-transparent truncate pr-2"
+              className="text-sm font-semibold text-(--text-primary) truncate pr-2"
             >
               {row.label}
             </div>
             {renderBar(
               "IN",
               row.in,
-              { total: "rgba(0,169,242,0.25)", unique: "var(--electric-blue)" },
+              { total: "rgba(0,169,242,0.25)", unique: "var(--light-blue)" },
               `${row.label}-in`,
             )}
             {renderBar(
