@@ -42,6 +42,9 @@ export function GateUniqueCount() {
     );
   }, [gateData]);
 
+  const formatLabel = (text) =>
+    text?.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
+
   const maxValue = useMemo(() => {
     const allCounts = rows.flatMap((r) => [r.in.count, r.out.count]);
     return allCounts.length ? Math.max(...allCounts, 1) : 1;
@@ -59,7 +62,7 @@ export function GateUniqueCount() {
     return (
       <div key={key} className="space-y-1">
         <div className="grid grid-cols-[1fr_auto] items-center gap-3 text-xs font-semibold">
-          <div className="relative h-3 w-full overflow-hidden rounded-full bg-(--egg-white)">
+          <div className="relative h-4 w-full overflow-hidden rounded-full bg-(--egg-white)">
             <div
               className="absolute left-0 top-0 h-full rounded-full transition-all"
               style={{ width: `${widthCount}%`, backgroundColor: colors.total }}
@@ -85,7 +88,7 @@ export function GateUniqueCount() {
   };
 
   return (
-    <div className="rounded-3xl border border-(--border-light) bg-[#FEEBDF] p-6 shadow-(--shadow-lg) hover:shadow-(--shadow-xl) transition-all">
+    <div className="rounded-lg border border-(--border-light) bg-[#FEEBDF] p-6 shadow-(--shadow-lg) hover:shadow-(--shadow-lg) transition-all">
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-lg font-(family-name:--font-chillax) font-semibold text-(--text-primary)">
           Gate Count
@@ -125,12 +128,10 @@ export function GateUniqueCount() {
         {rows.map((row) => (
           <div
             key={row.label}
-            className="space-y-2 rounded-2xl p-3 border border-(--border-light) bg-[rgba(0,0,0,0.02)] hover:shadow-(--shadow-md) transition-all"
+            className="space-y-2 rounded-lg p-3 border border-(--border-light) bg-white hover:shadow-(--shadow-md) transition-all"
           >
-            <div
-              className="text-sm font-semibold text-(--text-primary) truncate pr-2"
-            >
-              {row.label}
+            <div className="text-sm font-medium text-slate-700 truncate pr-2">
+              {formatLabel(row.label)}
             </div>
             {renderBar(
               "IN",

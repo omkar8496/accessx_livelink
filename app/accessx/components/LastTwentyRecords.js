@@ -4,6 +4,12 @@ import { useEffect, useState } from "react";
 import { fetchAccessLast20 } from "./api";
 import { getAuthSession } from "@livelink/lib/authStorage";
 
+function formatLabel(text) {
+  if (!text) return "";
+
+  return text.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
 const statusClass = (status) => {
   const normalized = status?.toLowerCase() ?? "";
   if (normalized === "allowed" || normalized === "allow") {
@@ -83,9 +89,9 @@ export function LastTwentyRecords() {
 
   const renderTable = (
     <div className="hidden md:block">
-      <div className="max-h-105 overflow-y-auto rounded-2xl border border-(--border-light)">
+      <div className="max-h-105 overflow-y-auto rounded-lg border border-(--border-light)">
         <table className="min-w-full text-left text-sm text-(--text-secondary)">
-          <thead className="sticky top-0 bg-[rgba(0,0,0,0.02)] backdrop-blur-sm">
+          <thead className="sticky top-0 bg-white border-b border-slate-200">
             <tr className="text-xs font-(--fw-semibold) uppercase tracking-[0.08em] text-(--text-tertiary)">
               <th className="px-3 py-2">Card Id</th>
               <th className="px-3 py-2">Gate</th>
@@ -99,39 +105,57 @@ export function LastTwentyRecords() {
           <tbody>
             {loading && (
               <tr>
-                <td colSpan={7} className="px-3 py-4 text-center text-(--text-secondary)">
+                <td
+                  colSpan={7}
+                  className="px-3 py-4 text-center text-(--text-secondary)"
+                >
                   Loading records…
                 </td>
               </tr>
             )}
             {!loading && records.length === 0 && !error && (
               <tr>
-                <td colSpan={7} className="px-3 py-4 text-center text-(--text-secondary)">
+                <td
+                  colSpan={7}
+                  className="px-3 py-4 text-center text-(--text-secondary)"
+                >
                   No records found.
                 </td>
               </tr>
             )}
             {!loading &&
               records.slice(0, 20).map((entry, idx) => (
-                <tr key={`${entry.card_id || "card"}-${idx}`} className={`transition hover:bg-[rgba(0,0,0,0.02)] ${idx % 2 === 0 ? "bg-(--bg-secondary)" : "bg-[rgba(0,0,0,0.01)]"}`}>
-                  <td className="px-3 py-3 font-(--fw-semibold) text-(--text-primary)">{entry.card_id || "—"}</td>
-                  <td className="px-3 py-3">{entry.gate_name || "—"}</td>
-                  <td className="px-3 py-3">{entry.category_name || "—"}</td>
-                  <td className="px-3 py-3 text-(--text-secondary)">{formatTime(entry.tapped_at_unix)}</td>
-                  <td className="px-3 py-3">
-                    <span className={`inline-flex min-w-13 items-center justify-center rounded-full px-3 py-1 text-xs font-(--fw-semibold) uppercase ${directionClass(entry.direction)}`}>
-                      {entry.direction || "—"}
-                    </span>
+                <tr
+                  key={`${entry.card_id || "card"}-${idx}`}
+                  className={`transition hover:bg-white ${idx % 2 === 0 ? "bg-(--bg-secondary)" : "bg-[rgba(0,0,0,0.01)]"}`}
+                >
+                  <td className="px-3 py-3 font-(--fw-medium) text-(--text-primary)">
+                    {entry.card_id || "—"}
                   </td>
                   <td className="px-3 py-3">
-                    <span className="inline-flex items-center justify-center rounded-full border border-(--border-light) bg-[rgba(0,0,0,0.02)] px-3 py-1 text-xs font-(--fw-semibold) text-(--text-secondary) capitalize">
-                      {entry.type || "—"}
-                    </span>
+                    {formatLabel(entry.gate_name) || "—"}
                   </td>
                   <td className="px-3 py-3">
-                    <span className={`inline-flex min-w-17.5 items-center justify-center rounded-full px-3 py-1 text-xs font-(--fw-semibold) ${statusClass(entry.status)}`}>
-                      {entry.status || "—"}
-                    </span>
+                    {formatLabel(entry.category_name) || "—"}
+                  </td>
+                  <td className="px-3 py-3 text-(--text-secondary)">
+                    {formatTime(entry.tapped_at_unix)}
+                  </td>
+                  <td className="px-3 py-3 text-sm font-medium text-slate-700">
+                    {entry.direction || "—"}
+                  </td>
+                  <td className="px-3 py-3 text-sm text-slate-600 uppercase">
+                    {entry.type || "—"}
+                  </td>
+                  <td
+                    className={`px-3 py-3 text-sm font-medium ${
+                      entry.status?.toLowerCase() === "allow" ||
+                      entry.status?.toLowerCase() === "allowed"
+                        ? "text-slate-700"
+                        : "text-red-500"
+                    }`}
+                  >
+                    {entry.status || "—"}
                   </td>
                 </tr>
               ))}
@@ -142,14 +166,17 @@ export function LastTwentyRecords() {
   );
 
   const renderCards = (
-    <div className="sticky top-2 space-y-2 overflow-y-auto md:hidden" style={{ maxHeight: "60vh" }}>
+    <div
+      className="sticky top-2 space-y-2 overflow-y-auto md:hidden"
+      style={{ maxHeight: "60vh" }}
+    >
       {loading && (
-        <div className="rounded-2xl border border-(--border-light) bg-(--bg-primary) px-3 py-3 text-sm text-(--text-secondary)">
+        <div className="rounded-lg border border-(--border-light) bg-(--bg-primary) px-3 py-3 text-sm text-(--text-secondary)">
           Loading records…
         </div>
       )}
       {!loading && records.length === 0 && !error && (
-        <div className="rounded-2xl border border-(--border-light) bg-(--bg-primary) px-3 py-3 text-sm text-(--text-secondary)">
+        <div className="rounded-lg border border-(--border-light) bg-(--bg-primary) px-3 py-3 text-sm text-(--text-secondary)">
           No records found.
         </div>
       )}
@@ -157,22 +184,30 @@ export function LastTwentyRecords() {
         records.slice(0, 20).map((entry, idx) => (
           <div
             key={`${entry.card_id || "card"}-${idx}`}
-            className={`rounded-2xl border border-(--border-light) px-4 py-3 shadow-(--shadow-sm) hover:shadow-(--shadow-md) transition ${statusBgMobile(entry.status)}`}
+            className={`rounded-lg border border-(--border-light) px-4 py-3 shadow-(--shadow-sm) hover:shadow-(--shadow-md) transition ${statusBgMobile(entry.status)}`}
           >
             <div className="flex items-center justify-between gap-2">
               <div className="text-sm font-(--fw-semibold) text-(--text-primary) leading-tight">
-                <div>{entry.card_id || "—"}{entry.gate_name ? ` • ${entry.gate_name}` : ""}</div>
+                <div>
+                  {entry.card_id || "—"}
+                  {entry.gate_name ? ` • ${entry.gate_name}` : ""}
+                </div>
               </div>
-              <span className={`inline-flex items-center justify-center rounded-full px-2 py-0.5 text-[10px] font-(--fw-semibold) uppercase ${directionClass(entry.direction)}`}>
+              <span
+                className={`inline-flex items-center justify-center rounded-full px-2 py-0.5 text-[10px] font-(--fw-semibold) uppercase ${directionClass(entry.direction)}`}
+              >
                 {entry.direction || "—"}
               </span>
             </div>
             <div className="mt-2 space-y-1 text-[11px] text-(--text-secondary)">
               <div className="flex items-center justify-between gap-3">
-                <span className="capitalize">{entry.type || "—"} {entry.category_name || ""}</span>
-                <span className="text-(--text-tertiary) whitespace-nowrap">{formatTime(entry.tapped_at_unix)}</span>
+                <span className="capitalize">
+                  {entry.type || "—"} {entry.category_name || ""}
+                </span>
+                <span className="text-(--text-tertiary) whitespace-nowrap">
+                  {formatTime(entry.tapped_at_unix)}
+                </span>
               </div>
-
             </div>
           </div>
         ))}
@@ -180,8 +215,10 @@ export function LastTwentyRecords() {
   );
 
   return (
-    <div className="rounded-3xl border border-(--border-light)  bg-[#FEEBDF] p-6 shadow-(--shadow-lg) transition-all hover:shadow-(--shadow-xl)">
-      <h3 className="text-lg font-(family-name:--font-chillax) font-(--fw-semibold) text-(--text-primary)">Last 20 Entries</h3>
+    <div className="rounded-lg border border-(--border-light)  bg-[#FEEBDF] p-6 shadow-(--shadow-lg) transition-all hover:shadow-(--shadow-lg)">
+      <h3 className="text-lg font-(family-name:--font-chillax) font-(--fw-semibold) text-(--text-primary)">
+        Last 20 Entries
+      </h3>
 
       {error && (
         <div className="mt-3 rounded-lg border border-(--accent-red) bg-[rgba(233,65,32,0.08)] px-3 py-2 text-sm text-(--accent-red)">

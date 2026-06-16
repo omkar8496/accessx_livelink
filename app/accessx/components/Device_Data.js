@@ -18,6 +18,12 @@ function formatTime(unixSeconds) {
     .replace(",", " -");
 }
 
+function formatLabel(text) {
+  if (!text) return "";
+
+  return text.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
 export function Device_Data() {
   const [devices, setDevices] = useState([]);
   const [error, setError] = useState("");
@@ -56,17 +62,17 @@ export function Device_Data() {
   }, []);
 
   return (
-    <div className="rounded-3xl border border-(--border-light)  bg-[#FEEBDF] p-6 shadow-(--shadow-lg) transition-all hover:shadow-(--shadow-xl)">
+    <div className="rounded-lg border border-(--border-light)  bg-[#FEEBDF] p-6 shadow-(--shadow-sm) transition-all hover:shadow-(--shadow-sm)">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3 flex-wrap">
           <h3 className="text-lg font-(family-name:--font-chillax) font-(--fw-semibold) text-(--text-primary)">
             Devices
           </h3>
           <div className="flex items-center gap-2 text-xs font-(--fw-semibold) text-(--text-secondary)">
-            <span className="text-[11px] uppercase tracking-[0.18em] font-(--fw-semibold) text-(--text-secondary) pt-1">
+            <span className="text-xs uppercase tracking-[0.18em] font-(--fw-semibold) text-(--text-secondary) pt-1">
               - View-{" "}
             </span>
-            <div className="flex items-center gap-1 rounded-full bg-[rgba(52,0,242,0.08)] px-1 ">
+            <div className="flex items-center gap-1 rounded-sm bg-white px-1 ">
               <button
                 type="button"
                 onClick={() => setView("grid")}
@@ -107,38 +113,35 @@ export function Device_Data() {
             return (
               <div
                 key={key}
-                className="relative overflow-hidden rounded-2xl border border-(--border-light) bg-(--bg-secondary) p-2.5 shadow-(--shadow-md) transition-all hover:shadow-(--shadow-lg)"
+                className="relative overflow-hidden rounded-lg border border-(--border-light) bg-(--bg-secondary) p-2 shadow-(--shadow-md) transition-all hover:shadow-(--shadow-sm)"
               >
-                <div className="absolute right-3 top-3 h-7 w-7 rounded-full border border-(--light-blue)/40 bg-(--bg-secondary) text-center text-sm font-(--fw-semibold) text-(--light-blue) flex items-center justify-center">
+                {/* <div className="absolute right-3 top-3 h-7 w-7 rounded-full border border-(--light-blue)/40 bg-(--bg-secondary) text-center text-sm font-(--fw-semibold) text-(--light-blue) flex items-center justify-center">
                   –
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="flex-1 space-y-1">
-                    <p className="text-sm font-(--fw-semibold) text-(--text-primary)">
-                      {device.gate_name ? `Gate ${device.gate_name}` : "Gate"}{" "}
-                      <span className="font-(--fw-bold)">
-                        - {device.device_print_id || "—"}
-                      </span>
+                </div> */}
+                <div className="flex items-center gap-1.5">
+                  <div className="flex-1 space-y-0.5">
+                    <p className="text-sm font-medium text-slate-800">
+                      {formatLabel(device.gate_name) || "—"}
                     </p>
-                    <p className="text-[12px] text-(--text-secondary)">
-                      {device.category_name || "—"}
+                    <p className="text-xs text-(--text-secondary)">
+                      {formatLabel(device.category_name) || "—"}
                     </p>
-                    <p className="text-[12px] font-(--fw-semibold) text-(--text-secondary)">
-                      type :{" "}
+                    <p className="text-xs font-(--fw-semibold) text-(--text-secondary)">
+                      Type :{" "}
                       <span className="font-(--fw-semibold) uppercase">
                         {device.type || device.direction || "—"}
                       </span>
                     </p>
-                    <p className="text-[11px] text-(--text-tertiary)">
+                    <p className="text-xs text-(--text-tertiary)">
                       {formatTime(device.latesttime)}
                     </p>
                   </div>
                   <div className="mx-1 h-10 w-px bg-(--border-light)" />
                   <div className="flex flex-col items-center justify-center min-w-14 pr-3">
-                    <span className="text-xl font-(--fw-bold) text-(--light-blue)">
+                    <span className="text-lg font-(--fw-bold) text-(--light-blue)">
                       {device.unique_count ?? "—"}
                     </span>
-                    <span className="text-xs uppercase tracking-wider text-(--text-tertiary)">
+                    <span className="text-[10px] uppercase tracking-wider text-(--text-tertiary)">
                       Count
                     </span>
                   </div>
@@ -154,7 +157,7 @@ export function Device_Data() {
               <button
                 type="button"
                 onClick={() => setExpanded((prev) => !prev)}
-                className="mt-2 w-full rounded-full border border-(--border-light) bg-(--bg-secondary) px-3 py-2 text-sm font-(--fw-semibold) text-(--text-secondary) shadow-(--shadow-sm) transition hover:bg-[rgba(0,0,0,0.02)]"
+                className="mt-2 w-full rounded-full border border-(--border-light) bg-(--bg-secondary) px-3 py-2 text-sm font-(--fw-semibold) text-(--text-secondary) shadow-(--shadow-sm) transition hover:bg-white"
               >
                 {expanded ? "Show less" : "Show all"}
               </button>
@@ -166,7 +169,7 @@ export function Device_Data() {
       {view === "table" && (
         <div className="mt-4 overflow-x-auto">
           <table className="min-w-full text-left text-sm text-(--text-secondary)">
-            <thead className="bg-[rgba(0,0,0,0.02)] text-xs font-(--fw-semibold) uppercase tracking-[0.08em] text-(--text-tertiary)">
+            <thead className="bg-white text-xs font-(--fw-semibold) uppercase tracking-[0.08em] text-(--text-tertiary)">
               <tr>
                 <th className="px-3 py-2">Device</th>
                 <th className="px-3 py-2">Gate</th>
@@ -210,14 +213,16 @@ export function Device_Data() {
                     return (
                       <tr
                         key={key}
-                        className="border-b border-(--border-light) hover:bg-[rgba(0,0,0,0.02)] transition-colors"
+                        className="border-b border-(--border-light) transition-colors"
                       >
-                        <td className="px-3 py-2 font-(--fw-semibold) text-(--text-primary)">
+                        <td className="px-3 py-2 font-(--fw-medium) text-(--text-primary)">
                           {device.device_print_id || "—"}
                         </td>
-                        <td className="px-3 py-2">{device.gate_name || "—"}</td>
                         <td className="px-3 py-2">
-                          {device.category_name || "—"}
+                          {formatLabel(device.gate_name) || "—"}
+                        </td>
+                        <td className="px-3 py-2">
+                          {formatLabel(device.category_name) || "—"}
                         </td>
                         <td className="px-3 py-2 text-(--light-blue) font-(--fw-semibold)">
                           {device.unique_count ?? "—"}
@@ -238,7 +243,7 @@ export function Device_Data() {
             <button
               type="button"
               onClick={() => setExpanded((prev) => !prev)}
-              className="mt-3 w-full rounded-lg border border-(--border-light-blue) bg-(--bg-secondary) px-3 py-2 text-sm font-(--fw-semibold) text-(--text-secondary) shadow-(--shadow-sm) transition hover:bg-[rgba(10,10,10,0.02)]"
+              className="mt-3 w-full rounded-lg border border-(--border-light-blue) bg-(--bg-secondary) px-3 py-2 text-sm font-(--fw-semibold) text-(--text-secondary) shadow-(--shadow-sm) transition hover:bg-white"
             >
               {expanded ? "Show less" : "Show more"}
             </button>

@@ -104,7 +104,7 @@ export function LiveAccessGraph() {
   const barAreaHeight = 260;
 
   return (
-    <div className="rounded-2xl bg-(--light-blue) p-3 md:p-4 text-white shadow-(--shadow-xl)">
+    <div className="rounded-lg bg-(--light-blue) p-3 md:p-4 text-white shadow-(--shadow-lg) ring-1 ring-black/10">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 md:gap-2 text-xs md:text-sm font-(--fw-semibold) tracking-[0.15em] text-white/90">
         <span>Current</span>
         <span className="tracking-normal text-white/80 text-xs">Hourwise</span>
@@ -122,7 +122,9 @@ export function LiveAccessGraph() {
             {/* Y-axis labels */}
             <div className="flex flex-col justify-between text-[10px] md:text-xs font-(--fw-semibold) text-white/80 min-w-6 md:min-w-10 items-end pr-0.5 md:pr-1.5 select-none shrink-0 h-30 md:h-40">
               {yLabels.map((tick) => (
-                <span key={tick} className="leading-none">{tick}</span>
+                <span key={tick} className="leading-none">
+                  {tick}
+                </span>
               ))}
             </div>
             {/* Bar area */}
@@ -138,9 +140,16 @@ export function LiveAccessGraph() {
                   {!loading &&
                     bars.map((bar) => {
                       const val = Number(bar.count) || 1;
-                      const heightPx = Math.max((val / topValue) * (window.innerWidth < 768 ? 80 : barAreaHeight), 6);
+                      const heightPx = Math.max(
+                        (val / topValue) *
+                          (window.innerWidth < 768 ? 80 : barAreaHeight),
+                        6,
+                      );
                       return (
-                        <div key={bar.hour_start} className="flex min-w-1 md:min-w-2 flex-1 flex-col items-center justify-end">
+                        <div
+                          key={bar.hour_start}
+                          className="flex min-w-1 md:min-w-2 flex-1 flex-col items-center justify-end"
+                        >
                           <div
                             className="w-1 md:w-2 rounded-full border border-white/70 bg-linear-to-b from-(--primary-orange) via-(--purple) to-white shadow-[0_8px_20px_rgba(0,0,0,0.15)]"
                             style={{ height: `${heightPx}px` }}
@@ -151,15 +160,23 @@ export function LiveAccessGraph() {
                 </div>
                 {/* X-axis labels and bar values */}
                 <div className="flex mt-0.5 md:mt-1.5 gap-px md:gap-1 min-w-70 md:min-w-0 px-0.5 md:px-0">
-                  {!loading && bars.map((bar) => {
-                    const val = Number(bar.count) || 1;
-                    return (
-                      <div key={bar.hour_start} className="flex min-w-1 md:min-w-2 flex-1 flex-col items-center justify-start">
-                        <span className="text-[8px] md:text-xs font-(--fw-semibold) text-white/90 whitespace-nowrap leading-tight">{formatHourOnly(bar.hour_start)}</span>
-                        <span className="text-[8px] md:text-xs font-(--fw-semibold) text-white/80 leading-none text-center">{val}</span>
-                      </div>
-                    );
-                  })}
+                  {!loading &&
+                    bars.map((bar) => {
+                      const val = Number(bar.count) || 1;
+                      return (
+                        <div
+                          key={bar.hour_start}
+                          className="flex min-w-1 md:min-w-2 flex-1 flex-col items-center justify-start"
+                        >
+                          <span className="text-[8px] md:text-xs font-(--fw-semibold) text-white/90 whitespace-nowrap leading-tight">
+                            {formatHourOnly(bar.hour_start)}
+                          </span>
+                          <span className="text-[8px] md:text-xs font-(--fw-semibold) text-white/80 leading-none text-center">
+                            {val}
+                          </span>
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
             </div>

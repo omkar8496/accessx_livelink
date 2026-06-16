@@ -191,16 +191,16 @@ public/
 
 ---
 
-## UI Improvements Implemented
+## UI/UX Enhancements
 
-* Improved Header design
-* Responsive Header layout
-* Recharts Pie Chart integration
-* Enhanced card styling
-* Improved spacing and typography
-* Brand color implementation
-* Mobile responsiveness improvements
-* Font system integration
+- Improved Event Header responsiveness
+- Integrated Recharts Pie Chart
+- Standardized typography across components
+- Optimized card sizing and spacing
+- Improved mobile responsiveness
+- Reduced excessive shadows and border radius
+- Applied brand-aligned color system
+- Enhanced table readability and consistency
 
 ---
 
@@ -261,12 +261,12 @@ Egg White: #EBEBEB
 
 ---
 
-## Notes
+## Architecture Notes
 
-* Existing API logic should not be modified.
-* Existing Context API implementation should be preserved.
-* Live graph functionality should remain unchanged.
-* UI improvements should focus on responsiveness, accessibility, and visual consistency.
+- Existing API integrations are preserved.
+- Existing Context API state management is     preserved.
+- UI improvements were implemented without modifying business logic.
+- Dashboard components consume data through the existing AccessDataContext.
 
 ---
 
@@ -280,7 +280,6 @@ Egg White: #EBEBEB
 
 ---
 
-## Authors
+## Maintainer
 
-* AtomX Design Team
-* AccessX Dashboard Project
+AtomX Internship Project

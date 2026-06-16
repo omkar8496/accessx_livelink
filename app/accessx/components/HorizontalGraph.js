@@ -4,6 +4,12 @@ import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import { fetchAccessGateCatg } from "./api";
 import { getAuthSession } from "@livelink/lib/authStorage";
 
+function formatLabel(text) {
+  if (!text) return "";
+
+  return text.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
 const COLORS = [
   "#E04420",
   "#00A9F2",
@@ -54,6 +60,9 @@ export function HorizontalGraph() {
       fetchedRef.current = false;
     };
   }, []);
+
+  const formatGateName = (name) =>
+    name.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
 
   const gateOptions = useMemo(() => {
     const unique = Array.from(
@@ -146,29 +155,29 @@ export function HorizontalGraph() {
   }));
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-[#FEEBDF] p-5 shadow-md">
+    <div className="rounded-lg border border-slate-200 bg-[#FEEBDF] p-5 shadow-sm">
       {/* Filters */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-wrap items-center gap-3">
           <select
             value={selectedGate}
             onChange={(e) => setSelectedGate(e.target.value)}
-            className="min-w-30 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="min-w-30 rounded-sm border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:outline-none"
           >
             {gateOptions.map((gate) => (
               <option key={gate} value={gate}>
-                {gate === "ALL" ? "All Gates" : gate}
+                {gate === "ALL" ? "All Gates" : formatGateName(gate)}
               </option>
             ))}
           </select>
 
-          <div className="flex items-center rounded-full border border-slate-300 bg-white p-1 shadow-sm">
+          <div className="flex items-center rounded-md border border-slate-300 bg-white p-1 shadow-sm">
             {["IN", "OUT"].map((dir) => (
               <button
                 key={dir}
                 type="button"
                 onClick={() => setDirection(dir)}
-                className={`min-w-13 px-3 py-1 text-xs font-semibold rounded-full transition focus:outline-none focus:ring-2 focus:ring-(--electric-blue) ${
+                className={`min-w-13 px-3 py-1 text-xs font-medium rounded-full transition focus:outline-none ${
                   direction === dir
                     ? "bg-(--black) text-white"
                     : "text-(--black) hover:bg-(--egg-white)"
@@ -182,7 +191,7 @@ export function HorizontalGraph() {
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
-            className="min-w-22.5 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="min-w-22.5 rounded-sm border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:outline-none"
           >
             <option value="ALL">All</option>
             <option value="nfc">nfc</option>
@@ -193,29 +202,29 @@ export function HorizontalGraph() {
 
       {/* Error */}
       {error && (
-        <div className="mt-4 rounded-md border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-700">
+        <div className="mt-4 rounded-sm border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-700">
           404 (Category Split data)
         </div>
       )}
 
       {/* Loading */}
       {loading && !error && (
-        <div className="mt-6 h-56 animate-pulse rounded-xl bg-slate-100" />
+        <div className="mt-6 h-56 animate-pulse rounded-md bg-slate-100" />
       )}
 
       {/* Empty */}
       {!loading && !error && segments.length === 0 && (
-        <p className="mt-4 text-sm text-slate-600">No category data.</p>
+        <p className="mt-4 text-sm text-slate-800">No category data.</p>
       )}
 
       {/* Graph */}
       {!loading && !error && segments.length > 0 && (
         <div className="mt-5">
-          <div className="relative flex flex-col items-center gap-4 rounded-xl border border-[rgba(0,169,242,0.15)] bg-linear-to-br from-[rgba(0,169,242,0.04)] to-[rgba(224,68,32,0.04)] px-4 py-4">
+          <div className="relative flex flex-col items-center gap-4 rounded-md border border-[#F4D6C8] bg-white px-4 py-4">
             <div className="flex w-full items-center justify-between">
               <div className="text-center">
-                <p className="text-sm font-semibold text-blue-500">Unique</p>
-                <p className="text-lg font-bold text-slate-900">
+                <p className="text-sm font-medium text-blue-500">UNIQUE</p>
+                <p className="text-2xl font-semibold text-slate-900">
                   {totalUnique}
                 </p>
               </div>
@@ -243,8 +252,10 @@ export function HorizontalGraph() {
               </div>
 
               <div className="text-center">
-                <p className="text-sm font-semibold text-red-500">Total</p>
-                <p className="text-lg font-bold text-slate-900">{totalCount}</p>
+                <p className="text-sm font-medium text-red-500">TOTAL</p>
+                <p className="text-2xl font-semibold text-slate-900">
+                  {totalCount}
+                </p>
               </div>
             </div>
           </div>
@@ -254,19 +265,19 @@ export function HorizontalGraph() {
             {segments.map((seg, idx) => (
               <div
                 key={seg.label + idx}
-                className="flex items-center justify-between rounded-md border border-slate-200 bg-white px-3 py-2 text-xs shadow-sm"
+                className="flex items-center justify-between rounded-sm border border-slate-200 bg-white px-3 py-2 text-xs"
               >
                 <div className="flex items-center gap-2">
                   <span
                     className="h-3 w-3 rounded-full"
                     style={{ backgroundColor: seg.color }}
                   />
-                  <span className="font-medium text-slate-800">
-                    {seg.label || "Unknown"}
+                  <span className="font-normal text-slate-700">
+                    {formatLabel(seg.label) || "Unknown"}
                   </span>
                 </div>
-                <div className="text-right text-slate-700">
-                  <div className="font-semibold">{seg.unique}</div>
+                <div className="text-right text-slate-800">
+                  <div className="font-medium">{seg.unique}</div>
                 </div>
               </div>
             ))}
